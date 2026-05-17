@@ -4,16 +4,32 @@ This directory contains a Cloudflare Worker implementation that acts as a dedica
 
 ## 🚀 Setup Instructions
 
-### 1. Deploy to Cloudflare
+### Option 1: Manual Deployment (Quick Start)
 1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/).
 2. Navigate to **Workers & Pages** $\rightarrow$ **Create application** $\rightarrow$ **Create Worker**.
 3. Name your worker (e.g., `lake-level-proxy`) and click **Deploy**.
 4. Click **Edit Code**, delete the existing content, and paste the contents of `worker.js` from this folder.
 5. Click **Save and Deploy**.
 
+### Option 2: GitHub Integration (Recommended for Developers)
+This method enables **Automatic Deployment**: every time you push a change to `worker.js` in your GitHub repo, Cloudflare will automatically update your live API.
+
+1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/).
+2. Navigate to **Workers & Pages** $\rightarrow$ **Create application** $\rightarrow$ **Pages** $\rightarrow$ **Connect to Git**.
+3. Select your GitHub account and the `raptors` repository.
+4. In the **Set up your application** screen, use these settings:
+   - **Project name**: `raptors` (or your preferred name).
+   - **Build command**: Leave this **empty**.
+   - **Deploy command**: `npx wrangler deploy worker.js`
+5. Click **Deploy**.
+
+   **⚠️ Configuration Note:**
+   Ensure your **Root Directory** is set to `/` (empty) in the Cloudflare settings.
+5. Click **Deploy**.
+
 ### 2. Your API Endpoint
-Once deployed, your endpoint will look like this:
-`https://lake-level-proxy.<your-subdomain>.workers.dev/`
+The live endpoint for this service is:
+`https://raptors.laszewski.workers.dev/`
 
 ---
 
@@ -41,19 +57,19 @@ The proxy returns a JSON object from USACE:
 
 ## 💻 Usage Examples
 
-Replace `YOUR_WORKER_URL` with your actual Cloudflare Worker URL (e.g., `https://lake-level-proxy.abc.workers.dev`).
+These examples use the live production endpoint: `https://raptors.laszewski.workers.dev/`
 
 ### 1. cURL
 Quickly test the endpoint from your terminal:
 ```bash
-curl -s "https://YOUR_WORKER_URL/"
+curl -s "https://raptors.laszewski.workers.dev/"
 ```
 
 ### 2. JavaScript (Fetch API)
 Ideal for integration into a website.
 ```javascript
 async function fetchLakeLevel() {
-  const workerUrl = "https://YOUR_WORKER_URL/";
+  const workerUrl = "https://raptors.laszewski.workers.dev/";
   
   try {
     const response = await fetch(workerUrl);
@@ -76,7 +92,7 @@ Ideal for backend scripts or data analysis.
 import requests
 
 def get_lake_level():
-    worker_url = "https://YOUR_WORKER_URL/"
+    worker_url = "https://raptors.laszewski.workers.dev/"
     
     try:
         response = requests.get(worker_url)
