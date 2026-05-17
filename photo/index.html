@@ -370,6 +370,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../weather/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Weather
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -980,6 +999,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weather/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weather
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1167,17 +1213,17 @@
 <p>In ideal conditions, a stationary bird may occupy two-thirds of the sensor. However, for birds in flight or when operating from a moving platform, the subject often occupies only one-third or less of the frame.</p>
 <h2 id="calculating-subject-distance">Calculating Subject Distance</h2>
 <p>To estimate the distance required to achieve a specific "fill ratio" (the portion of the sensor occupied by the subject), we use the thin lens equation approximation:</p>
-<p>$$d = \frac{f \cdot H}{h \cdot R}$$</p>
+<div class="arithmatex">\[d = \frac{f \cdot H}{h \cdot R}\]</div>
 <h3 id="technical-specifications-assumptions">Technical Specifications &amp; Assumptions</h3>
 <p>To standardize these calculations, the following parameters are used:</p>
 <ul>
-<li><strong>Subject Height (</strong>$H$): Average adult Bald Eagle $\approx 900\text{ mm}$ ($0.9\text{m}$).</li>
-<li><strong>Sensor Height (</strong>$h$):</li>
-<li><strong>FF:</strong> $24\text{mm}$</li>
-<li><strong>APS-C:</strong> $15\text{mm}$ (accounting for the $1.6\times$ crop factor)</li>
-<li><strong>M4/3:</strong> $13\text{mm}$ (accounting for the $2.0\times$ crop factor)</li>
-<li><strong>Fill Ratio (</strong>$R$): The vertical fraction of the sensor occupied by the bird (e.g., $0.33$ for 1/3 fill).</li>
-<li><strong>Focal Length (</strong>$f$): Calculated for $400\text{mm}$, $500\text{mm}$, $600\text{mm}$, and $800\text{mm}$ lenses.</li>
+<li><strong>Subject Height (</strong><span class="arithmatex">\(H\)</span>): Average adult Bald Eagle <span class="arithmatex">\(\approx 900\text{ mm}\)</span> (<span class="arithmatex">\(0.9\text{m}\)</span>).</li>
+<li><strong>Sensor Height (</strong><span class="arithmatex">\(h\)</span>):</li>
+<li><strong>FF:</strong> <span class="arithmatex">\(24\text{mm}\)</span></li>
+<li><strong>APS-C:</strong> <span class="arithmatex">\(15\text{mm}\)</span> (accounting for the <span class="arithmatex">\(1.6\times\)</span> crop factor)</li>
+<li><strong>M4/3:</strong> <span class="arithmatex">\(13\text{mm}\)</span> (accounting for the <span class="arithmatex">\(2.0\times\)</span> crop factor)</li>
+<li><strong>Fill Ratio (</strong><span class="arithmatex">\(R\)</span>): The vertical fraction of the sensor occupied by the bird (e.g., <span class="arithmatex">\(0.33\)</span> for 1/3 fill).</li>
+<li><strong>Focal Length (</strong><span class="arithmatex">\(f\)</span>): Calculated for <span class="arithmatex">\(400\text{mm}\)</span>, <span class="arithmatex">\(500\text{mm}\)</span>, <span class="arithmatex">\(600\text{mm}\)</span>, and <span class="arithmatex">\(800\text{mm}\)</span> lenses.</li>
 </ul>
 <h3 id="distance-to-subject-in-meters">Distance to Subject (in Meters)</h3>
 <table>
@@ -1187,7 +1233,7 @@
 <th style="text-align: left;">Sensor</th>
 <th style="text-align: left;">Model</th>
 <th style="text-align: left;">MP</th>
-<th style="text-align: left;">Height ($h$)</th>
+<th style="text-align: left;">Height (<span class="arithmatex">\(h\)</span>)</th>
 <th style="text-align: left;">1/3 Fill (R=0.33)</th>
 <th style="text-align: left;">1/2 Fill (R=0.50)</th>
 <th style="text-align: left;">2/3 Fill (R=0.66)</th>
@@ -1199,240 +1245,240 @@
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$13\text{mm}$</td>
-<td style="text-align: left;">$84.2\text{m}$</td>
-<td style="text-align: left;">$55.4\text{m}$</td>
-<td style="text-align: left;">$41.8\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(13\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(84.2\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(55.4\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(41.8\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$72.7\text{m}$</td>
-<td style="text-align: left;">$48.0\text{m}$</td>
-<td style="text-align: left;">$36.3\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(72.7\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(48.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(36.3\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$72.7\text{m}$</td>
-<td style="text-align: left;">$48.0\text{m}$</td>
-<td style="text-align: left;">$36.3\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(72.7\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(48.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(36.3\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
-<td style="text-align: left;">$30.0\text{m}$</td>
-<td style="text-align: left;">$22.7\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(30.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(22.7\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
-<td style="text-align: left;">$30.0\text{m}$</td>
-<td style="text-align: left;">$22.7\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(30.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(22.7\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
-<td style="text-align: left;">$30.0\text{m}$</td>
-<td style="text-align: left;">$22.7\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(30.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(22.7\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>500mm</strong></td>
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$13\text{mm}$</td>
-<td style="text-align: left;">$105.3\text{m}$</td>
-<td style="text-align: left;">$69.2\text{m}$</td>
-<td style="text-align: left;">$52.2\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(13\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(105.3\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(69.2\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(52.2\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$90.9\text{m}$</td>
-<td style="text-align: left;">$60.0\text{m}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(90.9\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(60.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$90.9\text{m}$</td>
-<td style="text-align: left;">$60.0\text{m}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(90.9\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(60.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$56.8\text{m}$</td>
-<td style="text-align: left;">$37.5\text{m}$</td>
-<td style="text-align: left;">$28.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(56.8\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(37.5\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(28.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$56.8\text{m}$</td>
-<td style="text-align: left;">$37.5\text{m}$</td>
-<td style="text-align: left;">$28.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(56.8\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(37.5\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(28.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$56.8\text{m}$</td>
-<td style="text-align: left;">$37.5\text{m}$</td>
-<td style="text-align: left;">$28.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(56.8\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(37.5\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(28.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>600mm</strong></td>
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$13\text{mm}$</td>
-<td style="text-align: left;">$125.8\text{m}$</td>
-<td style="text-align: left;">$83.1\text{m}$</td>
-<td style="text-align: left;">$63.1\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(13\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(125.8\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(83.1\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(63.1\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$109.1\text{m}$</td>
-<td style="text-align: left;">$72.0\text{m}$</td>
-<td style="text-align: left;">$54.5\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(109.1\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(72.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(54.5\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$109.1\text{m}$</td>
-<td style="text-align: left;">$72.0\text{m}$</td>
-<td style="text-align: left;">$54.5\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(109.1\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(72.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(54.5\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$68.2\text{m}$</td>
-<td style="text-align: left;">$45.0\text{m}$</td>
-<td style="text-align: left;">$34.1\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(68.2\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(34.1\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$68.2\text{m}$</td>
-<td style="text-align: left;">$45.0\text{m}$</td>
-<td style="text-align: left;">$34.1\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(68.2\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(34.1\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$68.2\text{m}$</td>
-<td style="text-align: left;">$45.0\text{m}$</td>
-<td style="text-align: left;">$34.1\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(68.2\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(34.1\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>800mm</strong></td>
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$13\text{mm}$</td>
-<td style="text-align: left;">$168.5\text{m}$</td>
-<td style="text-align: left;">$110.8\text{m}$</td>
-<td style="text-align: left;">$83.7\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(13\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(168.5\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(110.8\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(83.7\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$145.4\text{m}$</td>
-<td style="text-align: left;">$96.0\text{m}$</td>
-<td style="text-align: left;">$72.7\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(145.4\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(96.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(72.7\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$15\text{mm}$</td>
-<td style="text-align: left;">$145.4\text{m}$</td>
-<td style="text-align: left;">$96.0\text{m}$</td>
-<td style="text-align: left;">$72.7\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(15\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(145.4\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(96.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(72.7\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$90.9\text{m}$</td>
-<td style="text-align: left;">$60.0\text{m}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(90.9\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(60.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$90.9\text{m}$</td>
-<td style="text-align: left;">$60.0\text{m}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(90.9\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(60.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$24\text{mm}$</td>
-<td style="text-align: left;">$90.9\text{m}$</td>
-<td style="text-align: left;">$60.0\text{m}$</td>
-<td style="text-align: left;">$45.4\text{m}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(24\text{mm}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(90.9\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(60.0\text{m}\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(45.4\text{m}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1440,14 +1486,14 @@
     Note that with a <strong>400mm</strong> lens on a Full Frame camera, a 2/3 fill requires being within <strong>22.7 meters</strong>. Because ethical guidelines require maintaining a distance of at least <strong>100 meters</strong>, such a shot is generally unattainable without disturbing the bird. This underscores why <strong>800mm lenses</strong> or <strong>APS-C/M4/3 crop sensors</strong> are vital; they allow the photographer to maintain a safe, ethical distance while still achieving a high-quality, frame-filling composition.</p>
 <h3 id="field-observations">Field Observations</h3>
 <ul>
-<li><strong>The Kayak Factor:</strong> While crop sensors provide more "reach" (filling 1/3 of the sensor at $168\text{m}$ with an $800\text{mm}$ lens on M4/3), the narrower field of view makes tracking a flying bird more difficult from a rocking boat. In winds exceeding 10 mph, a <strong>500mm</strong> lens is often preferred as it is lighter and easier to maneuver.</li>
+<li><strong>The Kayak Factor:</strong> While crop sensors provide more "reach" (filling 1/3 of the sensor at <span class="arithmatex">\(168\text{m}\)</span> with an <span class="arithmatex">\(800\text{mm}\)</span> lens on M4/3), the narrower field of view makes tracking a flying bird more difficult from a rocking boat. In winds exceeding 10 mph, a <strong>500mm</strong> lens is often preferred as it is lighter and easier to maneuver.</li>
 <li><strong>Pixel Density:</strong> High-resolution sensors (45MP+) allow for significant post-processing cropping. Even if a bird only occupies 1/3 of the sensor, sufficient detail can often be recovered for identification purposes.</li>
-<li><strong>Atmospheric Disturbance:</strong> At extreme focal lengths (e.g., $800\text{mm}$ on APS-C, effectively $1280\text{mm}$), image quality is often limited by <strong>heat shimmer</strong>. Atmospheric distortion over long distances can cause a "lens blur" that cannot be corrected by optics.</li>
+<li><strong>Atmospheric Disturbance:</strong> At extreme focal lengths (e.g., <span class="arithmatex">\(800\text{mm}\)</span> on APS-C, effectively <span class="arithmatex">\(1280\text{mm}\)</span>), image quality is often limited by <strong>heat shimmer</strong>. Atmospheric distortion over long distances can cause a "lens blur" that cannot be corrected by optics.</li>
 </ul>
 <h2 id="analysis-at-100m-distance">Analysis at 100m Distance</h2>
-<p>To calculate the fill ratio ($R$) from a fixed distance of <strong>100 meters</strong>, we first determine the vertical image height on the sensor ($h_i$):</p>
-<p>$$h_i = \frac{f \cdot H}{d}$$</p>
-<p>Where $f$ is focal length, $H$ is the bird's height ($900\text{mm}$), and $d$ is the distance ($100\text{m}$). The fill ratio is then $h_i / \text{Sensor Height}$.</p>
+<p>To calculate the fill ratio (<span class="arithmatex">\(R\)</span>) from a fixed distance of <strong>100 meters</strong>, we first determine the vertical image height on the sensor (<span class="arithmatex">\(h_i\)</span>):</p>
+<div class="arithmatex">\[h_i = \frac{f \cdot H}{d}\]</div>
+<p>Where <span class="arithmatex">\(f\)</span> is focal length, <span class="arithmatex">\(H\)</span> is the bird's height (<span class="arithmatex">\(900\text{mm}\)</span>), and <span class="arithmatex">\(d\)</span> is the distance (<span class="arithmatex">\(100\text{m}\)</span>). The fill ratio is then <span class="arithmatex">\(h_i / \text{Sensor Height}\)</span>.</p>
 <h3 id="sensor-fill-fraction-at-100m">Sensor Fill Fraction at 100m</h3>
 <table>
 <thead>
@@ -1466,7 +1512,7 @@
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$3.6\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(3.6\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>27.7%</strong></td>
 </tr>
 <tr>
@@ -1474,7 +1520,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$3.6\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(3.6\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>24.3%</strong></td>
 </tr>
 <tr>
@@ -1482,7 +1528,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$3.6\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(3.6\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>24.3%</strong></td>
 </tr>
 <tr>
@@ -1490,7 +1536,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$3.6\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(3.6\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>15.0%</strong></td>
 </tr>
 <tr>
@@ -1498,7 +1544,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$3.6\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(3.6\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>15.0%</strong></td>
 </tr>
 <tr>
@@ -1506,7 +1552,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$3.6\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(3.6\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>15.0%</strong></td>
 </tr>
 <tr>
@@ -1514,7 +1560,7 @@
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$4.5\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(4.5\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>34.6%</strong></td>
 </tr>
 <tr>
@@ -1522,7 +1568,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$4.5\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(4.5\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>30.4%</strong></td>
 </tr>
 <tr>
@@ -1530,7 +1576,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$4.5\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(4.5\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>30.4%</strong></td>
 </tr>
 <tr>
@@ -1538,7 +1584,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$4.5\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(4.5\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>18.8%</strong></td>
 </tr>
 <tr>
@@ -1546,7 +1592,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$4.5\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(4.5\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>18.8%</strong></td>
 </tr>
 <tr>
@@ -1554,7 +1600,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$4.5\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(4.5\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>18.8%</strong></td>
 </tr>
 <tr>
@@ -1562,7 +1608,7 @@
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$5.4\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(5.4\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>41.5%</strong></td>
 </tr>
 <tr>
@@ -1570,7 +1616,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$5.4\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(5.4\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>36.0%</strong></td>
 </tr>
 <tr>
@@ -1578,7 +1624,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$5.4\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(5.4\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>36.0%</strong></td>
 </tr>
 <tr>
@@ -1586,7 +1632,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$5.4\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(5.4\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>22.5%</strong></td>
 </tr>
 <tr>
@@ -1594,7 +1640,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$5.4\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(5.4\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>22.5%</strong></td>
 </tr>
 <tr>
@@ -1602,7 +1648,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$5.4\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(5.4\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>22.5%</strong></td>
 </tr>
 <tr>
@@ -1610,7 +1656,7 @@
 <td style="text-align: left;">M4/3</td>
 <td style="text-align: left;">OM-S</td>
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">$7.2\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(7.2\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>55.4%</strong></td>
 </tr>
 <tr>
@@ -1618,7 +1664,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon R7</td>
 <td style="text-align: left;">32.5</td>
-<td style="text-align: left;">$7.2\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(7.2\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>48.6%</strong></td>
 </tr>
 <tr>
@@ -1626,7 +1672,7 @@
 <td style="text-align: left;">APS-C</td>
 <td style="text-align: left;">Canon EOS R10</td>
 <td style="text-align: left;">24.2</td>
-<td style="text-align: left;">$7.2\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(7.2\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>48.6%</strong></td>
 </tr>
 <tr>
@@ -1634,7 +1680,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A1 II</td>
 <td style="text-align: left;">50</td>
-<td style="text-align: left;">$7.2\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(7.2\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>30.0%</strong></td>
 </tr>
 <tr>
@@ -1642,7 +1688,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Canon R5 II</td>
 <td style="text-align: left;">45</td>
-<td style="text-align: left;">$7.2\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(7.2\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>30.0%</strong></td>
 </tr>
 <tr>
@@ -1650,7 +1696,7 @@
 <td style="text-align: left;">FF</td>
 <td style="text-align: left;">Sony A7 V*</td>
 <td style="text-align: left;">33</td>
-<td style="text-align: left;">$7.2\text{mm}$</td>
+<td style="text-align: left;"><span class="arithmatex">\(7.2\text{mm}\)</span></td>
 <td style="text-align: left;"><strong>30.0%</strong></td>
 </tr>
 </tbody>
@@ -1820,6 +1866,12 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="../js/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
