@@ -13,17 +13,27 @@ theme:
 extra_css:
   - css/styles.css
 
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - js/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
 nav:
   - Home: index.md
   - Observations: observations.md
   - Age: age.md
   - Kayak: kayak.md
   - Photography:
-      - Exposure: exposure.md
       - General: photo.md
+      - Exposure: exposure.md
       - Shot Planner: calculator.md
   - App: app.md
   - Birds: birds.md
   - Maps: maps.md
   - Lake Level: lake-level.md
   - Live Lake Level: live-lake-level.md
+  - Weather: weather.md

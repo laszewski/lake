@@ -12,7 +12,7 @@ html: clean cover
 	quarto preview --to html
 
 publish:
-	mkdocs gh-deploy
+	/Users/grey/.pyenv/versions/3.14.4/bin/python -m mkdocs gh-deploy
 
 clean:
 	rm -rf _book/
@@ -40,10 +40,10 @@ render: cover
 
 serve:
 	lsof -ti:8000 | xargs kill -9
-	mkdocs serve --livereload
+	/Users/grey/.pyenv/versions/3.14.4/bin/python -m mkdocs serve --livereload
 
 build:
-	mkdocs build
+	/Users/grey/.pyenv/versions/3.14.4/bin/python -m mkdocs build
 	
 
 	
