@@ -11,10 +11,6 @@
       
       
       
-        <link rel="prev" href="../lake-level/">
-      
-      
-        <link rel="next" href="../weather/">
       
       
         
@@ -353,11 +349,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../live-lake-level/" class="md-tabs__link">
         
   
   
@@ -785,37 +779,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Live Lake Level
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../live-lake-level/" class="md-nav__link">
         
   
   
@@ -831,37 +798,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-a-separate-window" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why a separate window?
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -982,10 +918,17 @@
     const timeEl = document.getElementById('lake-level-time');
 
     try {
-       // Using our dedicated Cloudflare Worker proxy which now defaults to the last 24 hours
-       const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/`;
+      const now = new Date();
+      const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
 
-       const response = await fetch(proxyUrl);
+      const begin = yesterday.toISOString();
+      const end = now.toISOString();
+      const sensor = "Monroe.Elev.Inst.0.0.lrldlb-rev";
+      const targetUrl = `https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries?name=${sensor}&begin=${begin}&end=${end}`;
+      // Using corsproxy.io which returns the raw response instead of wrapping it in a JSON object
+      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+
+      const response = await fetch(proxyUrl);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();

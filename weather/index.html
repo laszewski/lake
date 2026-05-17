@@ -886,30 +886,30 @@
 
     <div style="margin-bottom: 20px;">
       <span style="font-size: 0.9em; color: #666; text-transform: uppercase; font-weight: 600;">Temperature</span>
-      <div style="font-size: 3em; font-weight: 800; color: #3f51b5; margin: 10px 0; line-height: 1;">67°F</div>
-      <div style="font-size: 1em; color: #555;">High: 76°F &bull; Low: 66°F</div>
+      <div id="weather-temp" style="font-size: 3em; font-weight: 800; color: #3f51b5; margin: 10px 0; line-height: 1;">Loading...</div>
+      <div id="weather-range" style="font-size: 1em; color: #555;">Fetching range...</div>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; text-align: center;">
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Humidity</span>
-        <span style="font-size: 1.4em; font-weight: 700; color: #1a237e;">87%</span>
+        <span id="weather-humidity" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Wind</span>
-        <span style="font-size: 1.4em; font-weight: 700; color: #1a237e;">8 mph SE</span>
+        <span id="weather-wind" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">UV Index</span>
-        <span style="font-size: 1.4em; font-weight: 700; color: #1a237e;">8 (Very High)</span>
+        <span id="weather-uv" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Condition</span>
-        <span style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Clear</span>
+        <span id="weather-cond" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Cloud Cover</span>
-        <span style="font-size: 1.4em; font-weight: 700; color: #1a237e;">0%</span>
+        <span id="weather-clouds" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
     </div>
 
@@ -925,6 +925,48 @@
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  async function updateWeather() {
+    const tempEl = document.getElementById('weather-temp');
+    const rangeEl = document.getElementById('weather-range');
+    const humEl = document.getElementById('weather-humidity');
+    const windEl = document.getElementById('weather-wind');
+    const uvEl = document.getElementById('weather-uv');
+    const condEl = document.getElementById('weather-cond');
+    const cloudEl = document.getElementById('weather-clouds');
+
+    try {
+      const targetUrl = `https://wttr.in/Bloomington,Indiana?format=j1`;
+      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+
+      const response = await fetch(proxyUrl);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data = await response.json();
+      const current = data.current_condition[0];
+      const weather = data.weather[0];
+
+      tempEl.innerText = `${current.temp_F}°F`;
+      rangeEl.innerText = `High: ${weather.maxtempF}°F &bull; Low: ${weather.mintempF}°F`;
+      humEl.innerText = `${current.humidity}%`;
+      windEl.innerText = `${current.windspeedMiles} mph ${current.winddir16Point}`;
+      uvEl.innerText = `${weather.uvIndex} ${weather.uvIndex >= 6 ? '(High)' : ''}`;
+      condEl.innerText = current.weatherDesc[0].value;
+      cloudEl.innerText = `${current.cloudcover}%`;
+
+    } catch (error) {
+      console.error('Error fetching weather:', error);
+      const elements = [tempEl, rangeEl, humEl, windEl, uvEl, condEl, cloudEl];
+      elements.forEach(el => { if(el) el.innerText = 'Error'; });
+    }
+  }
+
+  // Run once on load
+  updateWeather();
+})();
+</script>
 
 <hr />
 <p><strong>Note:</strong> Weather conditions can change rapidly near the lake. Always check the latest forecast before heading out.</p>
