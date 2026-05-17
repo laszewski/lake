@@ -8,7 +8,7 @@ A comprehensive chart with detailed explanations is available at [Avian Report](
 
 ## First Year
 
-<img src="images/1.5-2.5.png" width="300" alt="1st year">
+![](images/1.5-2.5.png)
 
 First-year juveniles are the easiest to identify due to their consistent dark coloring.
 
@@ -18,7 +18,7 @@ First-year juveniles are the easiest to identify due to their consistent dark co
 
 ## Second Year
 
-<img src="images/2.png" width="300" alt="2nd year">
+![](images/2.png)
 
 Second-year eagles (roughly 1.5 to 2.5 years old) enter a "messy" transition phase.
 
@@ -37,7 +37,7 @@ Third-year eagles continue the transition toward adult plumage, becoming cleaner
 
 ## Near-Adult (4th or 5th Year)
 
-<img src="images/4-5.png" width="300" alt="4-5 years">
+![](images/4-5.png)
 
 Birds in this stage are nearly indistinguishable from adults at a distance.
 
@@ -47,7 +47,7 @@ Birds in this stage are nearly indistinguishable from adults at a distance.
 
 ## Adult (5+ Years)
 
-<img src="images/5.png" width="300" alt="5+ year old">
+![](images/5.png)
 
 Full adults have achieved their definitive plumage.
 

@@ -389,6 +389,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../forecast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Forecast
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -893,6 +912,33 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../forecast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forecast
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -982,17 +1028,10 @@
     const timeEl = document.getElementById('lake-level-time');
 
     try {
-      const now = new Date();
-      const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+       // Using our dedicated Cloudflare Worker proxy which now defaults to the last 24 hours
+       const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/`;
 
-      const begin = yesterday.toISOString();
-      const end = now.toISOString();
-      const sensor = "Monroe.Elev.Inst.0.0.lrldlb-rev";
-      const targetUrl = `https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries?name=${sensor}&begin=${begin}&end=${end}`;
-      // Using corsproxy.io which returns the raw response instead of wrapping it in a JSON object
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-
-      const response = await fetch(proxyUrl);
+       const response = await fetch(proxyUrl);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();

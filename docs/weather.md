@@ -19,19 +19,62 @@ To help you plan your visit, we provide the current weather conditions for the L
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Wind</span>
-        <span id="weather-wind" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
+          <div style="position: relative; width: 40px; height: 40px; margin-bottom: 5px;">
+            <div id="weather-wind-arrow" style="position: absolute; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 20px solid #3f51b5; left: 14px; top: 5px; transition: transform 0.5s ease;"></div>
+          </div>
+          <div id="weather-wind" style="font-size: 1.1em; font-weight: 700; color: #1a237e; line-height: 1.2;">Loading...</div>
+        </div>
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">UV Index</span>
-        <span id="weather-uv" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <div id="weather-uv-dot" style="width: 24px; height: 24px; border-radius: 50%; background: #ccc;"></div>
+          <span id="weather-uv" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+        </div>
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Condition</span>
         <span id="weather-cond" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
-      <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Cloud Cover</span>
-        <span id="weather-clouds" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
+         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Cloud Cover</span>
+         <span id="weather-clouds" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       </div>
+       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
+         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Feels Like</span>
+         <span id="weather-feels" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       </div>
+       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
+         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Visibility</span>
+         <span id="weather-vis" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       </div>
+       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
+         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Pressure</span>
+         <span id="weather-press" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       </div>
+       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
+         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Dew Point</span>
+         <span id="weather-dew" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       </div>
+       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
+         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Precip</span>
+         <span id="weather-precip" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+       </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px; text-align: center;">
+      <div style="padding: 15px; background: #f0f4ff; border-radius: 15px; border: 1px solid #d1d9ff;">
+        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Sunrise &bull; Sunset</span>
+        <div id="weather-sun-range" style="font-size: 1.1em; font-weight: 700; color: #1a237e; line-height: 1.4;">Loading...</div>
+      </div>
+      <div style="padding: 15px; background: #f0f4ff; border-radius: 15px; border: 1px solid #d1d9ff;">
+        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Moon Phase</span>
+        <span id="weather-moon" style="font-size: 1.1em; font-weight: 700; color: #1a237e;">Loading...</span>
+      </div>
+      <div style="padding: 15px; background: #f0f4ff; border-radius: 15px; border: 1px solid #d1d9ff;">
+        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Bloomington Time (EST)</span>
+        <span id="weather-time" style="font-size: 1.1em; font-weight: 700; color: #1a237e;">Loading...</span>
       </div>
     </div>
 
@@ -58,6 +101,16 @@ To help you plan your visit, we provide the current weather conditions for the L
     const uvEl = document.getElementById('weather-uv');
     const condEl = document.getElementById('weather-cond');
     const cloudEl = document.getElementById('weather-clouds');
+    const feelsEl = document.getElementById('weather-feels');
+    const visEl = document.getElementById('weather-vis');
+    const pressEl = document.getElementById('weather-press');
+    const uvDotEl = document.getElementById('weather-uv-dot');
+    const windArrowEl = document.getElementById('weather-wind-arrow');
+    const dewEl = document.getElementById('weather-dew');
+    const precipEl = document.getElementById('weather-precip');
+    const sunRangeEl = document.getElementById('weather-sun-range');
+    const moonEl = document.getElementById('weather-moon');
+    const timeEl = document.getElementById('weather-time');
 
     try {
       const targetUrl = `https://wttr.in/Bloomington,Indiana?format=j1`;
@@ -69,19 +122,59 @@ To help you plan your visit, we provide the current weather conditions for the L
       const data = await response.json();
       const current = data.current_condition[0];
       const weather = data.weather[0];
+      const astronomy = (weather.astronomy && weather.astronomy[0]) ? weather.astronomy[0] : {};
+      const hourly = (weather.hourly && weather.hourly[0]) ? weather.hourly[0] : {};
 
-      tempEl.innerText = `${current.temp_F}°F`;
-      rangeEl.innerText = `High: ${weather.maxtempF}°F &bull; Low: ${weather.mintempF}°F`;
-      humEl.innerText = `${current.humidity}%`;
-      windEl.innerText = `${current.windspeedMiles} mph ${current.winddir16Point}`;
-      uvEl.innerText = `${weather.uvIndex} ${weather.uvIndex >= 6 ? '(High)' : ''}`;
-      condEl.innerText = current.weatherDesc[0].value;
-      cloudEl.innerText = `${current.cloudcover}%`;
+      tempEl.innerText = `${current.temp_F || 'N/A'}°F`;
+      rangeEl.innerText = `High: ${weather.maxtempF || 'N/A'}°F • Low: ${weather.mintempF || 'N/A'}°F`;
+      humEl.innerText = `${current.humidity || 'N/A'}%`;
+      
+      const dirAbbr = current.winddir16Point || '';
+      const windDeg = current.winddirDegree || 0;
+      
+      windArrowEl.style.transform = `rotate(${windDeg}deg)`;
+      windEl.innerHTML = `${current.windspeedMiles || 'N/A'} mph<br>${dirAbbr}`;
+      
+      const uv = parseInt(current.uvIndex);
+      let uvColor = '#ccc';
+      let uvLabel = '';
+      
+      if (!isNaN(uv)) {
+        if (uv <= 2) { uvColor = '#32cd32'; uvLabel = ''; } // Green
+        else if (uv <= 5) { uvColor = '#ffff00'; uvLabel = ''; } // Yellow
+        else if (uv <= 7) { uvColor = '#ffa500'; uvLabel = ' (High)'; } // Orange
+        else if (uv <= 10) { uvColor = '#ff0000'; uvLabel = ' (Very High)'; } // Red
+        else { uvColor = '#800080'; uvLabel = ' (Extreme)'; } // Purple
+      }
+      
+      uvDotEl.style.backgroundColor = uvColor;
+      uvEl.innerText = `${current.uvIndex || 'N/A'}${uvLabel}`;
+       condEl.innerText = (current.weatherDesc && current.weatherDesc[0]) ? current.weatherDesc[0].value : 'N/A';
+       cloudEl.innerText = `${current.cloudcover || 'N/A'}%`;
+       feelsEl.innerText = `${current.FeelsLikeF || 'N/A'}°F`;
+       visEl.innerText = `${current.visibility || 'N/A'} mi`;
+       pressEl.innerText = `${current.pressure || 'N/A'} mb`;
+       dewEl.innerText = `${hourly.DewPointF || 'N/A'}°F`;
+       precipEl.innerText = `${current.precipMM || 'N/A'} mm`;
+       sunRangeEl.innerHTML = `${astronomy.sunrise || 'N/A'}<br>${astronomy.sunset || 'N/A'}`;
+       moonEl.innerText = astronomy.moon_phase || 'N/A';
+       
+       // Get actual current time in Bloomington (Eastern Time)
+       const bloomingtonTime = new Intl.DateTimeFormat('en-US', {
+         timeZone: 'America/New_York',
+         hour: 'numeric',
+         minute: 'numeric',
+         hour12: true
+       }).format(new Date());
+       
+       timeEl.innerText = bloomingtonTime;
 
     } catch (error) {
       console.error('Error fetching weather:', error);
-      const elements = [tempEl, rangeEl, humEl, windEl, uvEl, condEl, cloudEl];
+      const elements = [tempEl, rangeEl, humEl, windEl, uvEl, condEl, cloudEl, feelsEl, visEl, pressEl, dewEl, precipEl, sunRangeEl, moonEl, timeEl];
       elements.forEach(el => { if(el) el.innerText = 'Error'; });
+      if(uvDotEl) uvDotEl.style.backgroundColor = '#ccc';
+      if(windArrowEl) windArrowEl.style.transform = 'rotate(0deg)';
     }
   }
 

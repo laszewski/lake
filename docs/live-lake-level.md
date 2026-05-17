@@ -30,22 +30,17 @@ To ensure you are seeing the most accurate and up-to-date information, we provid
 
 <script>
 (function() {
+  const NORMAL_LEVEL = 538.00;
+
   async function updateLakeLevel() {
     const valueEl = document.getElementById('lake-level-value');
     const timeEl = document.getElementById('lake-level-time');
     
     try {
-      const now = new Date();
-      const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-      
-      const begin = yesterday.toISOString();
-      const end = now.toISOString();
-      const sensor = "Monroe.Elev.Inst.0.0.lrldlb-rev";
-      const targetUrl = `https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries?name=${sensor}&begin=${begin}&end=${end}`;
-      // Using corsproxy.io which returns the raw response instead of wrapping it in a JSON object
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-      
-      const response = await fetch(proxyUrl);
+       // Using our dedicated Cloudflare Worker proxy which now defaults to the last 24 hours
+       const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/`;
+       
+       const response = await fetch(proxyUrl);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       
       const data = await response.json();
@@ -57,7 +52,7 @@ To ensure you are seeing the most accurate and up-to-date information, we provid
         const val = Array.isArray(latest) ? latest[1] : latest.value;
         const time = Array.isArray(latest) ? latest[0] : latest.time;
         
-        const relativeVal = (val - 538.00).toFixed(2);
+        const relativeVal = (val - NORMAL_LEVEL).toFixed(2);
         document.getElementById('lake-level-relative').innerText = `${relativeVal} ft`;
         valueEl.innerText = `${val} ${data.unit || 'ft'}`;
         

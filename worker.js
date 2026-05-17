@@ -1,5 +1,16 @@
 export default {
   async fetch(request, env, ctx) {
+    // Handle CORS preflight requests
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+    }
+
     const url = new URL(request.url);
     
     // 1. Define the target USACE API base URL
@@ -7,7 +18,16 @@ export default {
     
     // Use the query parameters from the incoming request (e.g., ?name=...&begin=...&end=...)
     const queryString = url.search;
-    const targetUrl = queryString ? `${baseTargetUrl}${queryString}` : `${baseTargetUrl}?name=Monroe.Elev.Inst.0.0.lrldlb-rev&begin=2026-01-01T00:00:00Z&end=2026-12-31T23:59:59Z`;
+    
+    let targetUrl;
+    if (queryString) {
+      targetUrl = `${baseTargetUrl}${queryString}`;
+    } else {
+      // Default to the last 24 hours for the primary sensor
+      const now = new Date();
+      const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+      targetUrl = `${baseTargetUrl}?name=Monroe.Elev.Inst.0.0.lrldlb-rev&begin=${yesterday.toISOString()}&end=${now.toISOString()}`;
+    }
 
     try {
       // 2. Check the Cloudflare Cache first
@@ -37,7 +57,10 @@ export default {
     } catch (e) {
       return new Response('Error fetching data: ' + e.message, { 
         status: 500,
-        headers: { 'Content-Type': 'text/plain' }
+        headers: { 
+          'Content-Type': 'text/plain',
+          'Access-Control-Allow-Origin': '*'
+        }
       });
     }
   },

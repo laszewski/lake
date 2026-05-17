@@ -1,39 +1,31 @@
 # Lake Level CORS Proxy (Cloudflare Worker)
 
-This directory contains a Cloudflare Worker implementation that acts as a dedicated, cached CORS proxy for the USACE Lake Level API. It allows frontend applications (like GitHub Pages) to fetch live lake level data without encountering CORS errors.
+This project provides a dedicated, cached CORS proxy for the USACE Lake Level API. It allows frontend applications (like GitHub Pages) to fetch live lake level data without encountering CORS errors.
 
-## 🚀 Setup Instructions
+**Status**: Deployed and Active
+**Live Endpoint**: `https://monroe-lake-level.laszewski.workers.dev/`
 
-### Option 1: Manual Deployment (Quick Start)
-1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/).
-2. Navigate to **Workers & Pages** $\rightarrow$ **Create application** $\rightarrow$ **Create Worker**.
-3. Name your worker (e.g., `lake-level-proxy`) and click **Deploy**.
-4. Click **Edit Code**, delete the existing content, and paste the contents of `worker.js` from this folder.
-5. Click **Save and Deploy**.
+## Setup Instructions
 
-### Option 2: GitHub Integration (Recommended for Developers)
-This method enables **Automatic Deployment**: every time you push a change to `worker.js` in your GitHub repo, Cloudflare will automatically update your live API.
+### Option 1: Manual Deployment (Most Reliable)
+This is the recommended method to ensure the project is created as a **Worker** (and not a Page), avoiding routing errors.
 
 1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com/).
-2. Navigate to **Workers & Pages** $\rightarrow$ **Create application** $\rightarrow$ **Pages** $\rightarrow$ **Connect to Git**.
-3. Select your GitHub account and the `raptors` repository.
-4. In the **Set up your application** screen, use these settings:
-   - **Project name**: `raptors` (or your preferred name).
-   - **Build command**: Leave this **empty**.
-   - **Deploy command**: `npx wrangler deploy worker.js`
-5. Click **Deploy**.
+2. Navigate to **Workers & Pages** $\rightarrow$ **Create application**.
+3. Select the **Workers** tab/box and click **"Start with Hello World!"**.
+4. Name your worker (e.g., `lake-level-proxy`) and click **Deploy**.
+5. Click the **Edit Code** button.
+6. Delete all existing code in the editor and paste the entire contents of `worker.js` from this repository.
+7. Click **Save and Deploy**.
 
-   **⚠️ Configuration Note:**
-   Ensure your **Root Directory** is set to `/` (empty) in the Cloudflare settings.
-5. Click **Deploy**.
 
 ### 2. Your API Endpoint
 The live endpoint for this service is:
-`https://raptors.laszewski.workers.dev/`
+`https://monroe-lake-level.laszewski.workers.dev/`
 
 ---
 
-## 📖 API Documentation
+## API Documentation
 
 The proxy forwards requests to the USACE API. You can either call the proxy without parameters to get the default Lake Monroe data, or provide specific parameters.
 
@@ -55,21 +47,21 @@ The proxy returns a JSON object from USACE:
 
 ---
 
-## 💻 Usage Examples
+## Usage Examples
 
-These examples use the live production endpoint: `https://raptors.laszewski.workers.dev/`
+These examples use the live production endpoint: `https://monroe-lake-level.laszewski.workers.dev/`
 
 ### 1. cURL
 Quickly test the endpoint from your terminal:
 ```bash
-curl -s "https://raptors.laszewski.workers.dev/"
+curl -s "https://monroe-lake-level.laszewski.workers.dev/"
 ```
 
 ### 2. JavaScript (Fetch API)
 Ideal for integration into a website.
 ```javascript
 async function fetchLakeLevel() {
-  const workerUrl = "https://raptors.laszewski.workers.dev/";
+  const workerUrl = "https://monroe-lake-level.laszewski.workers.dev/";
   
   try {
     const response = await fetch(workerUrl);
@@ -92,7 +84,7 @@ Ideal for backend scripts or data analysis.
 import requests
 
 def get_lake_level():
-    worker_url = "https://raptors.laszewski.workers.dev/"
+    worker_url = "https://monroe-lake-level.laszewski.workers.dev/"
     
     try:
         response = requests.get(worker_url)

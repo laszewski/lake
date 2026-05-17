@@ -1,13 +1,14 @@
-site_name: Observing Eagles
-site_description: A Practitioners Guide
+site_name: Observing Eagles and Ospreys
+site_description: A comprehensive practitioner's guide to observing and identifying Bald Eagles and Ospreys, featuring real-time lake level data and field techniques.
 theme:
   name: material
   palette:
     primary: indigo
     accent: indigo
+  logo: images/eagle-logo-white.png
+  favicon: images/eagle-logo-white.png
   features:
-    - navigation.tabs
-    - navigation.sections
+    - navigation.expand
     - content.code.copy
 
 extra_css:
@@ -24,16 +25,22 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Observations: observations.md
-  - Age: age.md
-  - Kayak: kayak.md
-  - Photography:
-      - General: photo.md
-      - Exposure: exposure.md
-      - Shot Planner: calculator.md
-  - App: app.md
-  - Birds: birds.md
-  - Maps: maps.md
-  - Lake Level: lake-level.md
-  - Live Lake Level: live-lake-level.md
-  - Weather: weather.md
+  - Guide:
+      - Basics:
+          - Observations: observations.md
+          - Birds: birds.md
+          - Age: age.md
+      - Field Work:
+          - Kayak: kayak.md
+          - Photography:
+              - General: photo.md
+              - Exposure: exposure.md
+              - Shot Planner: calculator.md
+      - Environment:
+          - Maps: maps.md
+          - Lake Level: 
+            - Live: live-lake-level.md
+            - History: lake-level.md
+          - Weather: weather.md
+          - Forecast: forecast.md
+      - App: app.md
