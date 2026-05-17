@@ -1,0 +1,29 @@
+site_name: Observing Eagles
+site_description: A Practitioners Guide
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+
+extra_css:
+  - css/styles.css
+
+nav:
+  - Home: index.md
+  - Observations: observations.md
+  - Age: age.md
+  - Kayak: kayak.md
+  - Photography:
+      - Exposure: exposure.md
+      - General: photo.md
+      - Shot Planner: calculator.md
+  - App: app.md
+  - Birds: birds.md
+  - Maps: maps.md
+  - Lake Level: lake-level.md
+  - Live Lake Level: live-lake-level.md

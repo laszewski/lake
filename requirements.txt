@@ -1,0 +1,8 @@
+rasterio
+geopandas
+matplotlib
+numpy
+notebook
+ipykernel
+earthengine-api
+geemap
