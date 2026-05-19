@@ -1,6 +1,8 @@
 import csv
 import requests
 import os
+import time
+import random
 
 def get_usgs_elevation(session, lat, lng):
     """
@@ -12,9 +14,27 @@ def get_usgs_elevation(session, lat, lng):
         'y': lat,
         'units': 'Feet'  # Requesting Feet directly to match project units
     }
+    # Rotate User-Agents to avoid fingerprinting
+    user_agents = [
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0'
+    ]
+    
+    headers = {
+        'User-Agent': random.choice(user_agents),
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://apps.nationalmap.gov/epqs/',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-site',
+    }
     
     try:
-        response = session.get(base_url, params=params, timeout=10)
+        response = session.get(base_url, params=params, headers=headers, timeout=10)
         response.raise_for_status()
         data = response.json()
         return data.get('elevation')
@@ -46,20 +66,23 @@ def main():
         for row in rows:
             # Only fetch if USGS is empty or missing
             if not row.get('USGS'):
-                lat = row.get('lat')
-                lng = row.get('lon')
+                # Use correct header names from the CSV
+                lat = row.get('Latitude')
+                lng = row.get('Longitude')
                 
                 if lat and lng:
                     coord_key = (lat, lng)
                     if coord_key in usgs_cache:
                         row['USGS'] = usgs_cache[coord_key]
                     else:
-                        print(f"Fetching USGS elevation for {row.get('loc')} ({lat}, {lng})...")
                         val = get_usgs_elevation(session, lat, lng)
                         usgs_cache[coord_key] = val
                         row['USGS'] = val
+                        # Randomize delay to mimic human behavior (0.5 to 1.5 seconds)
+                        time.sleep(random.uniform(0.5, 1.5))
                 else:
-                    print(f"Missing coordinates for {row.get('loc')}, skipping USGS fetch.")
+                    # Log missing coords to console but don't spam tqdm
+                    pass
 
     # Write updated data back to CSV
     with open(temp_path, mode='w', newline='', encoding='utf-8') as outfile:

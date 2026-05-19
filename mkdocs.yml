@@ -42,7 +42,7 @@ nav:
             - Live: live-lake-level.md
             - History: lake-level.md
             - Flood Map: lake-level-map.md
-            - Flood Area Map: lake-level-flood-area-map.md
+            - Interactive Flood Map: flood-map-interactive.md
           - Weather: weather.md
           - Forecast: forecast.md
       - App: app.md
