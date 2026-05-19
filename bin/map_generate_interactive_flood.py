@@ -79,7 +79,7 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     rgba_data[..., 3] = mask * 125 # Alpha
     
     # Initialize Folium Map
-    m = folium.Map(location=[39.06, -86.45], zoom_start=11, tiles=None)
+    m = folium.Map(location=[39.06, -86.45], zoom_start=13, tiles=None)
     
     # Add OpenStreetMap base layer
     folium.TileLayer('openstreetmap', name="OpenStreetMap").add_to(m)
@@ -106,6 +106,28 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     folium.LayerControl(position="topright").add_to(m)
     plugins.Fullscreen(position="topleft", title="Expand", title_cancel="Exit").add_to(m)
     
+    # Custom Zoom Control Panel
+    locations = {
+        "Cartop": [39.09829, -86.46397],
+        "Cutright": [39.06877, -86.40666],
+        "Fairfax": [39.02275, -86.48169],
+        "Osprey Trail": [39.01638, -86.48529],
+        "Paynetown": [39.08104, -86.43379],
+        "Pinegrove": [39.10910, -86.38909],
+        "North Fork": [39.11133, -86.39926],
+        "Salt Creek": [39.13144, -86.39161],
+    }
+    
+    buttons_html = '<div style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: Arial, sans-serif;">'
+    buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Quick Zoom</h4>'
+    
+    for name, coords in locations.items():
+        js_call = f"var m = Object.values(window).find(v => v instanceof L.Map); if(m) m.setView([{coords[0]}, {coords[1]}], 17);"
+        buttons_html += f'<button onclick="{js_call}" style="display: block; width: 100%; margin: 5px 0; padding: 5px 10px; cursor: pointer; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; text-align: left; font-size: 12px;">{name}</button>'
+    
+    buttons_html += '</div>'
+    
+    m.get_root().html.add_child(folium.Element(buttons_html))
     
     m.save(output_html)
     print(f"\nSuccess! Interactive map file generated: {output_html}")

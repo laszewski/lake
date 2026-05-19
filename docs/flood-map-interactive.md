@@ -10,7 +10,7 @@ Click the button below to open the flood map in a new browser tab.
 
 <div style="text-align: center; margin: 2em 0;">
     <a href="../flood-map-interactive.html" target="_blank" style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 25px; font-size: 1.1em; cursor: pointer; background-color: #3f51b5; color: white; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); font-family: inherit;">
-        <img src="../images/map-monroe-lake.png" alt="Map Icon" style="width: 180px; height: auto; margin-bottom: 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3);">
+        <img src="../images/flood-map-button-image.png" alt="Map Icon" style="width: 180px; height: auto; margin-bottom: 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3);">
         Open Full-Screen Flood Map
     </a>
 </div>
