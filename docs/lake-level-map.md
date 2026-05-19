@@ -1,7 +1,8 @@
 # Lake Level Flood Map
 
 <div style="margin-bottom: 20px; padding: 15px; background: #fff3cd; border-left: 5px solid #ffc107; color: #856404; border-radius: 4px; font-family: sans-serif; font-size: 0.9em; line-height: 1.5;">
-  <strong>⚠️ WARNING:</strong> This data is for informational purposes only and <strong>must not be used for navigation</strong> in any form (including cars, boats, or walking) as it is highly inaccurate in nature. The values displayed are based on interpolated elevations and may not be accurate.
+  <strong>⚠️ WARNING:</strong> This data is for informational purposes only and <strong>must not be used for navigation</strong> in any form (including cars, boats, or walking) as it is highly inaccurate in nature. The values displayed are based on interpolated elevations and may not be accurate.<br><br>
+  <strong>Special Caution for Roads:</strong> If a point is on a road and is within 1 to 2 feet of the water level, it is <strong>not safe to drive on</strong>. Many of these are gravel roads that become saturated; you may sink into the road even if the surface appears to be above water. Please wait until the ground has properly dried out. (Personal experience: I once got stuck on such a road despite it being over 2 ft above the water level).
 </div>
 
 This interactive map shows the flood status of various locations based on the current live lake level.
@@ -54,7 +55,7 @@ This interactive map shows the flood status of various locations based on the cu
 
 <script>
 (async function() {
-  const elevationJsonUrl = '/data/elevation.json';
+  const elevationJsonUrl = 'data/elevation.json';
   const proxyUrl = 'https://monroe-lake-level.laszewski.workers.dev';
   
   // Map Layer Definitions
@@ -80,19 +81,35 @@ This interactive map shows the flood status of various locations based on the cu
     attribution: layers['Standard'].attr
   }).addTo(map);
 
-    // 1. Fetch Live Lake Level (Independent)
+  try {
+    // 1. Fetch Live Lake Level (Mirroring live-lake-level.md)
+    let latestValue = 538.0; // Default fallback
     try {
       const levelResponse = await fetch(proxyUrl);
-      if (!levelResponse.ok) throw new Error(`HTTP ${levelResponse.status}`);
-      const levelData = await levelResponse.json();
-      const latestValue = levelData.values[levelData.values.length - 1][1];
-      document.getElementById('current-level').innerText = latestValue;
+      if (levelResponse.ok) {
+        const levelData = await levelResponse.json();
+        if (levelData.values && levelData.values.length > 0) {
+          latestValue = levelData.values[levelData.values.length - 1][1];
+          document.getElementById('current-level').innerText = latestValue;
+        }
+      } else {
+        throw new Error(`HTTP ${levelResponse.status}`);
+      }
+    } catch (levelError) {
+      console.error('Error fetching lake level:', levelError);
+      document.getElementById('current-level').innerText = 'Error';
+    }
 
-      // 2. Fetch Elevation Data (Independent)
-      try {
-        const elevResponse = await fetch(elevationJsonUrl);
-        if (!elevResponse.ok) throw new Error(`HTTP ${elevResponse.status}`);
-        const elevationData = await elevResponse.json();
+    // 2. Fetch Elevation Data
+    let elevationData;
+    try {
+      // In MkDocs, the page is at /lake-level-map/index.html, so data is at ../data/elevation.json
+      let elevResponse = await fetch('../data/elevation.json');
+      if (!elevResponse.ok) {
+        elevResponse = await fetch('data/elevation.json');
+      }
+      if (!elevResponse.ok) throw new Error(`Failed to load elevation data`);
+      elevationData = await elevResponse.json();
 
         const tableBody = document.querySelector('#flood-table tbody');
         const buttonContainer = document.getElementById('area-buttons');
