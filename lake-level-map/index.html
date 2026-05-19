@@ -1124,7 +1124,7 @@
 
 <script>
 (async function() {
-  const elevationJsonUrl = '/data/elevation.json';
+  const elevationJsonUrl = 'data/elevation.json';
   const proxyUrl = 'https://monroe-lake-level.laszewski.workers.dev';
 
   // Map Layer Definitions
@@ -1150,19 +1150,35 @@
     attribution: layers['Standard'].attr
   }).addTo(map);
 
-    // 1. Fetch Live Lake Level (Independent)
+  try {
+    // 1. Fetch Live Lake Level (Mirroring live-lake-level.md)
+    let latestValue = 538.0; // Default fallback
     try {
       const levelResponse = await fetch(proxyUrl);
-      if (!levelResponse.ok) throw new Error(`HTTP ${levelResponse.status}`);
-      const levelData = await levelResponse.json();
-      const latestValue = levelData.values[levelData.values.length - 1][1];
-      document.getElementById('current-level').innerText = latestValue;
+      if (levelResponse.ok) {
+        const levelData = await levelResponse.json();
+        if (levelData.values && levelData.values.length > 0) {
+          latestValue = levelData.values[levelData.values.length - 1][1];
+          document.getElementById('current-level').innerText = latestValue;
+        }
+      } else {
+        throw new Error(`HTTP ${levelResponse.status}`);
+      }
+    } catch (levelError) {
+      console.error('Error fetching lake level:', levelError);
+      document.getElementById('current-level').innerText = 'Error';
+    }
 
-      // 2. Fetch Elevation Data (Independent)
-      try {
-        const elevResponse = await fetch(elevationJsonUrl);
-        if (!elevResponse.ok) throw new Error(`HTTP ${elevResponse.status}`);
-        const elevationData = await elevResponse.json();
+    // 2. Fetch Elevation Data
+    let elevationData;
+    try {
+      // In MkDocs, the page is at /lake-level-map/index.html, so data is at ../data/elevation.json
+      let elevResponse = await fetch('../data/elevation.json');
+      if (!elevResponse.ok) {
+        elevResponse = await fetch('data/elevation.json');
+      }
+      if (!elevResponse.ok) throw new Error(`Failed to load elevation data`);
+      elevationData = await elevResponse.json();
 
         const tableBody = document.querySelector('#flood-table tbody');
         const buttonContainer = document.getElementById('area-buttons');
