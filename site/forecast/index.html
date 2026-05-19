@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../lake-level/">
+        <link rel="prev" href="../weather/">
       
       
-        <link rel="next" href="../forecast/">
+        <link rel="next" href="../app/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Weather - Observing Eagles and Ospreys</title>
+        <title>Forecast - Observing Eagles and Ospreys</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#weather-for-lake-monroe" class="md-skip">
+        <a href="#kayak-photo-weather-forecast-for-lake-monroe" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Weather
+              Forecast
             
           </span>
         </div>
@@ -836,19 +836,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../weather/" class="md-nav__link">
         
   
   
@@ -864,7 +855,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -874,10 +864,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../forecast/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forecast
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -893,6 +910,37 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kayak-photography-wind-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📷 Kayak Photography Wind Guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -961,6 +1009,25 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kayak-photography-wind-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📷 Kayak Photography Wind Guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -976,85 +1043,54 @@
 
 
 
-<h1 id="weather-for-lake-monroe">Weather for Lake Monroe</h1>
-<p>To help you plan your visit, we provide the current weather conditions for the Lake Monroe area.</p>
-<div style="max-width: 600px; margin: 20px auto; font-family: sans-serif;">
-  <div id="weather-card" style="text-align: center; padding: 30px; background: #f8faff; border: 1px solid #d1d9ff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-    <h3 style="margin-top: 0; color: #3f51b5; font-size: 1.2em; text-transform: uppercase; letter-spacing: 1px;">Current Weather</h3>
-
-    <div style="margin-bottom: 20px;">
-      <span style="font-size: 0.9em; color: #666; text-transform: uppercase; font-weight: 600;">Temperature</span>
-      <div id="weather-temp" style="font-size: 3em; font-weight: 800; color: #3f51b5; margin: 10px 0; line-height: 1;">Loading...</div>
-      <div id="weather-range" style="font-size: 1em; color: #555;">Fetching range...</div>
+<h1 id="kayak-photo-weather-forecast-for-lake-monroe">Kayak Photo Weather Forecast for Lake Monroe</h1>
+<p>Plan your trip with the 3-day weather forecast for the Bloomington, IN area.</p>
+<div style="max-width: 800px; margin: 20px auto; font-family: sans-serif;">
+  <div id="forecast-card" style="padding: 30px; background: #f8faff; border: 1px solid #d1d9ff; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    <h3 style="margin-top: 0; color: #3f51b5; font-size: 1.2em; text-transform: uppercase; letter-spacing: 1px; text-align: center;">Today's Hourly Breakdown</h3>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 10px; overflow: hidden;">
+        <thead>
+          <tr style="background-color: #5c6bc0; color: white; text-align: left;">
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Time</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Temp</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff;">Condition</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 120px; white-space: nowrap;">Wind</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Precip</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px; text-align: center;">Photo</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 150px;">Events</th>
+          </tr>
+        </thead>
+        <tbody id="hourly-body">
+          <tr>
+            <td colspan="7" style="padding: 20px; text-align: center; color: #666;">Loading hourly data...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; text-align: center;">
-      <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Humidity</span>
-        <span id="weather-humidity" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-      </div>
-      <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Wind</span>
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
-          <div style="position: relative; width: 40px; height: 40px; margin-bottom: 5px;">
-            <div id="weather-wind-arrow" style="position: absolute; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 20px solid #3f51b5; left: 14px; top: 5px; transition: transform 0.5s ease;"></div>
-          </div>
-          <div id="weather-wind" style="font-size: 1.1em; font-weight: 700; color: #1a237e; line-height: 1.2;">Loading...</div>
-        </div>
-      </div>
-      <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">UV Index</span>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <div id="weather-uv-dot" style="width: 24px; height: 24px; border-radius: 50%; background: #ccc;"></div>
-          <span id="weather-uv" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-        </div>
-      </div>
-      <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Condition</span>
-        <span id="weather-cond" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-      </div>
-       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Cloud Cover</span>
-         <span id="weather-clouds" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-       </div>
-       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Feels Like</span>
-         <span id="weather-feels" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-       </div>
-       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Visibility</span>
-         <span id="weather-vis" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-       </div>
-       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Pressure</span>
-         <span id="weather-press" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-       </div>
-       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Dew Point</span>
-         <span id="weather-dew" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-       </div>
-       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
-         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Precip</span>
-         <span id="weather-precip" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
-       </div>
+    <h3 style="margin-top: 30px; color: #3f51b5; font-size: 1.2em; text-transform: uppercase; letter-spacing: 1px; text-align: center;">3-Day Forecast</h3>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 10px; overflow: hidden; table-layout: auto;">
+        <thead>
+          <tr style="background-color: #3f51b5; color: white; text-align: left;">
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Date</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Temp</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff;">Condition</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Wind</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; text-align: center; width: 1%; white-space: nowrap;">Photo</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Precip</th>
+          </tr>
+        </thead>
+        <tbody id="forecast-body">
+          <tr>
+            <td colspan="5" style="padding: 20px; text-align: center; color: #666;">Loading forecast data...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px; text-align: center;">
-      <div style="padding: 15px; background: #f0f4ff; border-radius: 15px; border: 1px solid #d1d9ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Sunrise &bull; Sunset</span>
-        <div id="weather-sun-range" style="font-size: 1.1em; font-weight: 700; color: #1a237e; line-height: 1.4;">Loading...</div>
-      </div>
-      <div style="padding: 15px; background: #f0f4ff; border-radius: 15px; border: 1px solid #d1d9ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Moon Phase</span>
-        <span id="weather-moon" style="font-size: 1.1em; font-weight: 700; color: #1a237e;">Loading...</span>
-      </div>
-      <div style="padding: 15px; background: #f0f4ff; border-radius: 15px; border: 1px solid #d1d9ff;">
-        <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Bloomington Time (EST)</span>
-        <span id="weather-time" style="font-size: 1.1em; font-weight: 700; color: #1a237e;">Loading...</span>
-      </div>
-    </div>
-
-    <div style="border-top: 1px solid #e0e5ff; padding-top: 20px;">
+    <div style="border-top: 1px solid #e0e5ff; padding-top: 20px; margin-top: 20px; text-align: center;">
       <p style="font-size: 0.95em; color: #555; margin-bottom: 15px;">
         Data provided by wttr.in for Bloomington, IN.
       </p>
@@ -1069,24 +1105,21 @@
 
 <script>
 (function() {
-  async function updateWeather() {
-    const tempEl = document.getElementById('weather-temp');
-    const rangeEl = document.getElementById('weather-range');
-    const humEl = document.getElementById('weather-humidity');
-    const windEl = document.getElementById('weather-wind');
-    const uvEl = document.getElementById('weather-uv');
-    const condEl = document.getElementById('weather-cond');
-    const cloudEl = document.getElementById('weather-clouds');
-    const feelsEl = document.getElementById('weather-feels');
-    const visEl = document.getElementById('weather-vis');
-    const pressEl = document.getElementById('weather-press');
-    const uvDotEl = document.getElementById('weather-uv-dot');
-    const windArrowEl = document.getElementById('weather-wind-arrow');
-    const dewEl = document.getElementById('weather-dew');
-    const precipEl = document.getElementById('weather-precip');
-    const sunRangeEl = document.getElementById('weather-sun-range');
-    const moonEl = document.getElementById('weather-moon');
-    const timeEl = document.getElementById('weather-time');
+  async function updateForecast() {
+    const forecastBody = document.getElementById('forecast-body');
+    const hourlyBody = document.getElementById('hourly-body');
+
+    const timeToMins = (t) => {
+      if (!t) return null;
+      const match = t.match(/(\d+):?(\d+)?\s*(AM|PM)?/i);
+      if (!match) return null;
+      let hrs = parseInt(match[1]);
+      const mins = match[2] ? parseInt(match[2]) : 0;
+      const amp = match[3];
+      if (amp && amp.toUpperCase() === 'PM' && hrs < 12) hrs += 12;
+      if (amp && amp.toUpperCase() === 'AM' && hrs === 12) hrs = 0;
+      return hrs * 60 + mins;
+    };
 
     try {
       const targetUrl = `https://wttr.in/Bloomington,Indiana?format=j1`;
@@ -1096,71 +1129,230 @@
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();
-      const current = data.current_condition[0];
-      const weather = data.weather[0];
-      const astronomy = (weather.astronomy && weather.astronomy[0]) ? weather.astronomy[0] : {};
-      const hourly = (weather.hourly && weather.hourly[0]) ? weather.hourly[0] : {};
+      const weatherForecast = data.weather;
 
-      tempEl.innerText = `${current.temp_F || 'N/A'}°F`;
-      rangeEl.innerText = `High: ${weather.maxtempF || 'N/A'}°F • Low: ${weather.mintempF || 'N/A'}°F`;
-      humEl.innerText = `${current.humidity || 'N/A'}%`;
+      forecastBody.innerHTML = '';
 
-      const dirAbbr = current.winddir16Point || '';
-      const windDeg = current.winddirDegree || 0;
+      weatherForecast.forEach(day => {
+        const row = document.createElement('tr');
+        row.style.borderBottom = '1px solid #e0e5ff';
 
-      windArrowEl.style.transform = `rotate(${windDeg}deg)`;
-      windEl.innerHTML = `${current.windspeedMiles || 'N/A'} mph<br>${dirAbbr}`;
+        const date = day.date;
+        const condition = (day.hourly && day.hourly[0]) ? day.hourly[0].weatherDesc[0].value : 'N/A';
+        const high = day.maxtempF;
+        const low = day.mintempF;
+        const precip = (day.hourly && day.hourly[0]) ? day.hourly[0].precipMM : '0';
 
-      const uv = parseInt(current.uvIndex);
-      let uvColor = '#ccc';
-      let uvLabel = '';
+        // Calculate Wind Range
+        const windSpeeds = day.hourly.map(h => parseFloat(h.windspeedMiles));
+        const minWind = Math.min(...windSpeeds);
+        const maxWind = Math.max(...windSpeeds);
 
-      if (!isNaN(uv)) {
-        if (uv <= 2) { uvColor = '#32cd32'; uvLabel = ''; } // Green
-        else if (uv <= 5) { uvColor = '#ffff00'; uvLabel = ''; } // Yellow
-        else if (uv <= 7) { uvColor = '#ffa500'; uvLabel = ' (High)'; } // Orange
-        else if (uv <= 10) { uvColor = '#ff0000'; uvLabel = ' (Very High)'; } // Red
-        else { uvColor = '#800080'; uvLabel = ' (Extreme)'; } // Purple
+        // Calculate Photo Suitability for Daylight Hours
+        const astro = (day.astronomy && day.astronomy[0]) ? day.astronomy[0] : {};
+        const sunriseMins = timeToMins(astro.sunrise);
+        const sunsetMins = timeToMins(astro.sunset);
+
+        const daylightHours = day.hourly.filter(h => {
+          const tVal = parseInt(h.time);
+          const mins = tVal <= 23 ? tVal * 60 : (Math.floor(tVal/100)*60 + (tVal%100));
+          return sunriseMins !== null && sunsetMins !== null && mins >= sunriseMins && mins < sunsetMins;
+        });
+
+        let photoCircles = '';
+        if (daylightHours.length > 0) {
+          // Pick 3 representative hours: start, middle, end of daylight
+          const indices = [0, Math.floor(daylightHours.length / 2), daylightHours.length - 1];
+          const uniqueIndices = [...new Set(indices)];
+
+          photoCircles = `<div style="display: flex; justify-content: center; gap: 4px;">`;
+          uniqueIndices.forEach(idx => {
+            const h = daylightHours[idx];
+            const ws = parseFloat(h.windspeedMiles);
+            let color = '#f44336';
+            if (ws <= 5) color = '#4caf50';
+            else if (ws <= 10) color = '#ffeb3b';
+            else if (ws <= 15) color = '#ff9800';
+            photoCircles += `<div style="width: 10px; height: 10px; border-radius: 50%; background-color: ${color}; border: 1px solid rgba(0,0,0,0.1);"></div>`;
+          });
+          photoCircles += `</div>`;
+        } else {
+          photoCircles = '<span style="color: #ccc; font-size: 0.8em;">N/A</span>';
+        }
+
+        row.innerHTML = `
+          <td style="padding: 10px 8px; color: #333; font-weight: 600; white-space: nowrap;">${date}</td>
+          <td style="padding: 10px 8px; color: #333; font-weight: 700; white-space: nowrap;">${low} - ${high}°F</td>
+          <td style="padding: 10px 8px; color: #555;">${condition}</td>
+          <td style="padding: 10px 8px; color: #555; white-space: nowrap;">${minWind}–${maxWind} mph</td>
+          <td style="padding: 10px 8px; text-align: center; white-space: nowrap;">${photoCircles}</td>
+          <td style="padding: 10px 8px; color: #555; white-space: nowrap;">${precip} mm</td>
+        `;
+        forecastBody.appendChild(row);
+      });
+
+      // Populate Hourly Data for Today
+      const todayHourly = weatherForecast[0].hourly;
+      const astronomy = (weatherForecast[0].astronomy && weatherForecast[0].astronomy[0]) ? weatherForecast[0].astronomy[0] : {};
+      const sunriseStr = astronomy.sunrise || '';
+      const sunsetStr = astronomy.sunset || '';
+
+
+      const sunriseMins = timeToMins(sunriseStr);
+      const sunsetMins = timeToMins(sunsetStr);
+
+      // Create a unified timeline of events
+      const timeline = [];
+
+      // Add hourly blocks
+      todayHourly.forEach(hour => {
+        const timeVal = parseInt(hour.time);
+        let mins;
+
+        if (timeVal <= 23) {
+          // Format is just the hour (0-23)
+          mins = timeVal * 60;
+        } else {
+          // Format is HHmm (e.g., 300 for 3:00, 1500 for 15:00)
+          const hrs = Math.floor(timeVal / 100);
+          const m = timeVal % 100;
+          mins = hrs * 60 + m;
+        }
+        timeline.push({ mins, type: 'hourly', data: hour });
+      });
+
+      // Add sunrise event
+      if (sunriseMins !== null) {
+        timeline.push({ mins: sunriseMins, type: 'sunrise', timeStr: sunriseStr });
       }
 
-      uvDotEl.style.backgroundColor = uvColor;
-      uvEl.innerText = `${current.uvIndex || 'N/A'}${uvLabel}`;
-       condEl.innerText = (current.weatherDesc && current.weatherDesc[0]) ? current.weatherDesc[0].value : 'N/A';
-       cloudEl.innerText = `${current.cloudcover || 'N/A'}%`;
-       feelsEl.innerText = `${current.FeelsLikeF || 'N/A'}°F`;
-       visEl.innerText = `${current.visibility || 'N/A'} mi`;
-       pressEl.innerText = `${current.pressure || 'N/A'} mb`;
-       dewEl.innerText = `${hourly.DewPointF || 'N/A'}°F`;
-       precipEl.innerText = `${current.precipMM || 'N/A'} mm`;
-       sunRangeEl.innerHTML = `${astronomy.sunrise || 'N/A'}<br>${astronomy.sunset || 'N/A'}`;
-       moonEl.innerText = astronomy.moon_phase || 'N/A';
+      // Add sunset event
+      if (sunsetMins !== null) {
+        timeline.push({ mins: sunsetMins, type: 'sunset', timeStr: sunsetStr });
+      }
 
-       // Get actual current time in Bloomington (Eastern Time)
-       const bloomingtonTime = new Intl.DateTimeFormat('en-US', {
-         timeZone: 'America/New_York',
-         hour: 'numeric',
-         minute: 'numeric',
-         hour12: true
-       }).format(new Date());
+      // Sort timeline by minutes since midnight
+      timeline.sort((a, b) => a.mins - b.mins);
 
-       timeEl.innerText = bloomingtonTime;
+      hourlyBody.innerHTML = '';
+      timeline.forEach(item => {
+        const hRow = document.createElement('tr');
+        hRow.style.borderBottom = '1px solid #e0e5ff';
+
+        let bgColor = 'white';
+        let rowContent = '';
+
+        if (item.type === 'sunrise') {
+          bgColor = '#fff9c4'; // Yellow
+          rowContent = `
+            <td style="padding: 10px 15px; color: #333; font-weight: 600;">${item.timeStr}</td>
+            <td colspan="4" style="border: none; background: transparent;"></td>
+            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600; font-size: 0.9em;">🌅 Sunrise</td>
+            <td style="border: none; background: transparent;"></td>
+          `;
+        } else if (item.type === 'sunset') {
+          bgColor = '#f5f5f5'; // Grey
+          rowContent = `
+            <td style="padding: 10px 15px; color: #333; font-weight: 600;">${item.timeStr}</td>
+            <td colspan="4" style="border: none; background: transparent;"></td>
+            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600; font-size: 0.9em;">🌇 Sunset</td>
+            <td style="border: none; background: transparent;"></td>
+          `;
+        } else {
+          // Hourly row
+          if (sunriseMins !== null && item.mins < sunriseMins) {
+            bgColor = '#f5f5f5'; // Grey before sunrise
+          } else if (sunsetMins !== null && item.mins >= sunsetMins) {
+            bgColor = '#f5f5f5'; // Grey after sunset
+          }
+
+          const hour = item.data;
+
+          // Convert the raw time (e.g., "300" or "3") to a readable format (e.g., "3:00 AM")
+          const timeVal = parseInt(hour.time);
+          let displayTime = hour.time;
+          if (timeVal <= 23) {
+            displayTime = `${timeVal}:00 ${timeVal >= 12 ? 'PM' : 'AM'}`;
+            if (timeVal === 0) displayTime = '12:00 AM';
+            if (timeVal === 12) displayTime = '12:00 PM';
+            if (timeVal > 12) {
+              const h12 = timeVal - 12;
+              displayTime = `${h12}:00 PM`;
+            }
+          } else {
+            const hrs = Math.floor(timeVal / 100);
+            const m = timeVal % 100;
+            const amp = hrs >= 12 ? 'PM' : 'AM';
+            let h12 = hrs % 12;
+            if (h12 === 0) h12 = 12;
+            displayTime = `${h12}:${m.toString().padStart(2, '0')} ${amp}`;
+          }
+
+          const windSpeed = parseFloat(hour.windspeedMiles);
+          let photoColor = '#ccc';
+
+          // Check if it's before sunrise or after sunset
+          if (sunriseMins !== null && item.mins < sunriseMins) {
+            photoColor = '#555'; // Dark gray for night/dawn
+          } else if (sunsetMins !== null && item.mins >= sunsetMins) {
+            photoColor = '#555'; // Dark gray for night/dusk
+          } else {
+            // Daylight wind suitability
+            if (windSpeed <= 5) photoColor = '#4caf50'; // Green
+            else if (windSpeed <= 10) photoColor = '#ffeb3b'; // Yellow
+            else if (windSpeed <= 15) photoColor = '#ff9800'; // Orange
+            else photoColor = '#f44336'; // Red
+          }
+
+          rowContent = `
+            <td style="padding: 10px 15px; color: #333; font-weight: 600;">${displayTime}</td>
+            <td style="padding: 10px 15px; color: #333;">${hour.tempF}°F</td>
+            <td style="padding: 10px 15px; color: #555;">${hour.weatherDesc[0].value}</td>
+            <td style="padding: 10px 15px; color: #555; white-space: nowrap;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="position: relative; width: 16px; height: 16px;">
+                  <div style="position: absolute; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-bottom: 10px solid #3f51b5; left: 5px; top: 3px; transform: rotate(${hour.winddirDegree || 0}deg);"></div>
+                </div>
+                <span>${hour.windspeedMiles} mph ${hour.winddir16Point}</span>
+              </div>
+            </td>
+            <td style="padding: 10px 15px; color: #555;">${hour.precipMM} mm</td>
+            <td style="padding: 10px 15px; text-align: center;">
+              <div style="width: 14px; height: 14px; border-radius: 50%; background-color: ${photoColor}; margin: 0 auto; border: 1px solid rgba(0,0,0,0.1);"></div>
+            </td>
+            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600; font-size: 0.9em;"></td>
+          `;
+        }
+
+        hRow.style.backgroundColor = bgColor;
+        hRow.innerHTML = rowContent;
+        hourlyBody.appendChild(hRow);
+      });
 
     } catch (error) {
-      console.error('Error fetching weather:', error);
-      const elements = [tempEl, rangeEl, humEl, windEl, uvEl, condEl, cloudEl, feelsEl, visEl, pressEl, dewEl, precipEl, sunRangeEl, moonEl, timeEl];
-      elements.forEach(el => { if(el) el.innerText = 'Error'; });
-      if(uvDotEl) uvDotEl.style.backgroundColor = '#ccc';
-      if(windArrowEl) windArrowEl.style.transform = 'rotate(0deg)';
+      console.error('Error fetching forecast:', error);
+      forecastBody.innerHTML = `<tr><td colspan="5" style="padding: 20px; text-align: center; color: #d32f2f;">Error loading forecast data. Please try again later.</td></tr>`;
+      hourlyBody.innerHTML = `<tr><td colspan="7" style="padding: 20px; text-align: center; color: #d32f2f;">Error loading hourly data.</td></tr>`;
     }
   }
 
-  // Run once on load
-  updateWeather();
+  updateForecast();
 })();
 </script>
 
 <hr />
-<p><strong>Note:</strong> Weather conditions can change rapidly near the lake. Always check the latest forecast before heading out.</p>
+<h3 id="kayak-photography-wind-guide">📷 Kayak Photography Wind Guide</h3>
+<p>For doing photos in a kayak, acceptable wind speeds are under <strong>5 to 10 mph (4 to 9 knots)</strong>. Winds above this create choppy water and push your kayak around, turning your boat into an unstable platform that makes holding a camera steady and avoiding blurry photos almost impossible.</p>
+<p><strong>Wind Range Suitability:</strong>
+- <span style="color: #4caf50; font-weight: bold;">0–5 mph: Blissful.</span> The water is often glassy, offering perfect conditions for sharp wildlife shots, macro photography, and stunning reflections.
+- <span style="color: #fbc02d; font-weight: bold;">5–10 mph: Manageable.</span> Light chop; increase shutter speed (e.g., 1/1000s) and rely on image stabilization.
+- <span style="color: #ff9800; font-weight: bold;">10–15 mph: Challenging.</span> Waves increase and kayak blows off course. Not recommended for casual photography.
+- <span style="color: #f44336; font-weight: bold;">15+ mph: Unsafe.</span> Choppy conditions and whitecaps make operating a camera a major risk.</p>
+<p><strong>Pro Tips for Kayak Photography:</strong>
+- <strong>Go early</strong>: Wind speeds are typically lowest in the early morning. Paddle out against the wind so the breeze pushes you home when you are tired.
+- <strong>Seek shelter</strong>: Narrow rivers, sheltered coves, and areas with dense tree lines block the wind and smooth out the water.
+- <strong>Prioritize safety</strong>: Review marine and weather forecasts using the National Weather Service to ensure conditions match your experience.</p>
+<p><strong>Note:</strong> Forecasts are estimates. Please check the full forecast for detailed hourly updates.</p>
 
 
 

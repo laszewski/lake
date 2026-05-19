@@ -41,6 +41,7 @@ nav:
           - Lake Level: 
             - Live: live-lake-level.md
             - History: lake-level.md
+            - Flood Map: lake-level-map.md
           - Weather: weather.md
           - Forecast: forecast.md
       - App: app.md
