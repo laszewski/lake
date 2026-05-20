@@ -12,13 +12,14 @@ export default {
     }
 
     const url = new URL(request.url);
+    const pathname = url.pathname.replace(/\/$/, ""); // Remove trailing slash for easier matching
     
     let targetUrl;
     
     // Handle weather requests
-    if (url.pathname === "/weather") {
+    if (pathname === "/weather") {
       targetUrl = "https://wttr.in/Bloomington,Indiana?format=j1";
-    } else if (url.pathname === "/level" || url.pathname === "/") {
+    } else if (pathname === "/level" || pathname === "") {
       // Handle USACE lake level requests
       const baseTargetUrl = "https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries";
       const queryString = url.search;
@@ -32,7 +33,10 @@ export default {
         targetUrl = `${baseTargetUrl}?name=Monroe.Elev.Inst.0.0.lrldlb-rev&begin=${yesterday.toISOString()}&end=${now.toISOString()}`;
       }
     } else {
-      return new Response("Not Found", { status: 404 });
+      return new Response("Not Found", { 
+        status: 404,
+        headers: { "Access-Control-Allow-Origin": "*" }
+      });
     }
 
     try {
@@ -42,25 +46,28 @@ export default {
 
       if (!response) {
         // Cache miss: Fetch from target
-        const fetchOptions = {};
-        if (url.pathname === "/weather") {
-          fetchOptions.headers = { "Accept": "application/json" };
-        }
+        const fetchOptions = {
+          headers: { "Accept": "application/json" }
+        };
         
         response = await fetch(targetUrl, fetchOptions);
         
         // Create a new response to modify headers and store it in cache
-        response = new Response(response.body, response);
+        // Clone it so we don't consume the body yet
+        const freshResponse = response.clone();
+        
+        // Create a response to be cached
+        const responseToCache = new Response(freshResponse.body, freshResponse);
         
         // Set cache duration: 6 hours for USACE, 15 mins for weather
-        const cacheMaxAge = (url.pathname === "/weather") ? 900 : 21600;
-        response.headers.set('Cache-Control', `public, max-age=${cacheMaxAge}`);
+        const cacheMaxAge = (pathname === "/weather") ? 900 : 21600;
+        responseToCache.headers.set('Cache-Control', `public, max-age=${cacheMaxAge}`);
         
-        // Store the response in cache in the background
-        ctx.waitUntil(cache.put(request, response.clone()));
+        // Store in cache
+        ctx.waitUntil(cache.put(request, responseToCache));
       }
 
-      // 3. Add CORS headers to the response (whether cached or fresh)
+      // 3. Return response with CORS headers
       const finalResponse = new Response(response.body, response);
       finalResponse.headers.set('Access-Control-Allow-Origin', '*');
       finalResponse.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, POST, OPTIONS');

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
+  <!-- Horizon -->
+  <line x1="2" y1="24" x2="28" y2="24" stroke="#3f51b5" stroke-width="2" stroke-linecap="round"/>
+  <!-- Sun -->
+  <path d="M8,24 a7,7 0 0,1 14,0" fill="none" stroke="#FFCC00" stroke-width="2"/>
+  <!-- Arrow Down -->
+  <path d="M15,4 L15,14 M12,11 L15,14 L18,11" fill="none" stroke="#3f51b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

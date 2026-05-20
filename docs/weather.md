@@ -119,19 +119,24 @@ To help you plan your visit, we provide the current weather conditions for the L
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       
       const data = await response.json();
-      const current = data.current_condition[0];
-      const weather = data.weather[0];
+      
+      if (!data || !data.current_condition || !data.weather) {
+        throw new Error("Invalid weather data format received");
+      }
+
+      const current = data.current_condition[0] || {};
+      const weather = data.weather[0] || {};
       const astronomy = (weather.astronomy && weather.astronomy[0]) ? weather.astronomy[0] : {};
       const hourly = (weather.hourly && weather.hourly[0]) ? weather.hourly[0] : {};
 
-      tempEl.innerText = `${current.temp_F || 'N/A'}°F`;
+      tempEl.innerText = current.temp_F ? `${current.temp_F}°F` : 'N/A';
       rangeEl.innerText = `High: ${weather.maxtempF || 'N/A'}°F • Low: ${weather.mintempF || 'N/A'}°F`;
-      humEl.innerText = `${current.humidity || 'N/A'}%`;
+      humEl.innerText = current.humidity ? `${current.humidity}%` : 'N/A';
       
       const dirAbbr = current.winddir16Point || '';
       const windDeg = current.winddirDegree || 0;
       
-      windArrowEl.style.transform = `rotate(${windDeg}deg)`;
+      if (windArrowEl) windArrowEl.style.transform = `rotate(${windDeg}deg)`;
       windEl.innerHTML = `${current.windspeedMiles || 'N/A'} mph<br>${dirAbbr}`;
       
       const uv = parseInt(current.uvIndex);
@@ -146,17 +151,17 @@ To help you plan your visit, we provide the current weather conditions for the L
         else { uvColor = '#800080'; uvLabel = ' (Extreme)'; } // Purple
       }
       
-      uvDotEl.style.backgroundColor = uvColor;
-      uvEl.innerText = `${current.uvIndex || 'N/A'}${uvLabel}`;
-       condEl.innerText = (current.weatherDesc && current.weatherDesc[0]) ? current.weatherDesc[0].value : 'N/A';
-       cloudEl.innerText = `${current.cloudcover || 'N/A'}%`;
-       feelsEl.innerText = `${current.FeelsLikeF || 'N/A'}°F`;
-       visEl.innerText = `${current.visibility || 'N/A'} mi`;
-       pressEl.innerText = `${current.pressure || 'N/A'} mb`;
-       dewEl.innerText = `${hourly.DewPointF || 'N/A'}°F`;
-       precipEl.innerText = `${current.precipMM || 'N/A'} mm`;
-       sunRangeEl.innerHTML = `${astronomy.sunrise || 'N/A'}<br>${astronomy.sunset || 'N/A'}`;
-       moonEl.innerText = astronomy.moon_phase || 'N/A';
+      if (uvDotEl) uvDotEl.style.backgroundColor = uvColor;
+      uvEl.innerText = (current.uvIndex !== undefined) ? `${current.uvIndex}${uvLabel}` : 'N/A';
+      condEl.innerText = (current.weatherDesc && current.weatherDesc[0]) ? current.weatherDesc[0].value : 'N/A';
+      cloudEl.innerText = current.cloudcover ? `${current.cloudcover}%` : 'N/A';
+      feelsEl.innerText = current.FeelsLikeF ? `${current.FeelsLikeF}°F` : 'N/A';
+      visEl.innerText = current.visibility ? `${current.visibility} mi` : 'N/A';
+      pressEl.innerText = current.pressure ? `${current.pressure} mb` : 'N/A';
+      dewEl.innerText = hourly.DewPointF ? `${hourly.DewPointF}°F` : 'N/A';
+      precipEl.innerText = current.precipMM ? `${current.precipMM} mm` : 'N/A';
+      sunRangeEl.innerHTML = `${astronomy.sunrise || 'N/A'}<br>${astronomy.sunset || 'N/A'}`;
+      moonEl.innerText = astronomy.moon_phase || 'N/A';
        
        // Get actual current time in Bloomington (Eastern Time)
        const bloomingtonTime = new Intl.DateTimeFormat('en-US', {

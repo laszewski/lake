@@ -11,15 +11,20 @@ all: clean
 html: clean cover
 	quarto preview --to html
 
-publish:
+publish-git:
 	/Users/grey/.pyenv/versions/3.14.4/bin/python -m mkdocs gh-deploy
+
+publish: build
+	rsync --progress -pavz site/ lake:./lake.vonlaszewski.com
+
+# scp -r public/* user@remote_host:/path/to/CCC/
 
 clean:
 	rm -rf _book/
 	rm -rf .quarto/
 	rm -rf *_cache/
 	rm -rf *_files/
-	
+
 view:
 	open _book/Observing-Eagles.pdf
 
@@ -39,8 +44,16 @@ render: cover
 	mv final_book.pdf _book/Observing-Eagles.pdf
 
 serve:
-	lsof -ti:8000 | xargs kill -9
+	lsof -ti:8000 | xargs kill -9 || true
+	lsof -ti:8787 | xargs kill -9 || true
+	npx wrangler dev worker.js --port 8787 &
+	sleep 2
 	/Users/grey/.pyenv/versions/3.14.4/bin/python -m mkdocs serve --livereload
+
+# To develop locally:
+# 1. Run 'make dev-worker' in one terminal
+# 2. Run 'make serve' in another terminal
+# 3. Note: You may need to update the proxyUrl in .md files to http://localhost:8787/weather for local testing
 
 build:
 	/Users/grey/.pyenv/versions/3.14.4/bin/python -m mkdocs build

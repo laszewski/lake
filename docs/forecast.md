@@ -10,8 +10,9 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
         <thead>
           <tr style="background-color: #5c6bc0; color: white; text-align: left;">
             <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Time</th>
-            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Temp</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 60px; text-align: center;">Icon</th>
             <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff;">Condition</th>
+            <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Temp</th>
             <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 120px; white-space: nowrap;">Wind</th>
             <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px;">Precip</th>
             <th style="padding: 10px 15px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 80px; text-align: center;">Photo</th>
@@ -32,8 +33,9 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
         <thead>
           <tr style="background-color: #3f51b5; color: white; text-align: left;">
             <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Date</th>
-            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Temp</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 60px; text-align: center;">Icon</th>
             <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff;">Condition</th>
+            <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Temp</th>
             <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Wind</th>
             <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; text-align: center; width: 1%; white-space: nowrap;">Photo</th>
             <th style="padding: 10px 8px; font-weight: 600; border-bottom: 2px solid #d1d9ff; width: 1%; white-space: nowrap;">Precip</th>
@@ -62,6 +64,52 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
 
 <script>
 (function() {
+  const WEATHER_ICON_MAP = {
+    // Codes from https://www.worldweatheronline.com/feed/wwo-codes.txt
+    "113": "sunny.svg",
+    "116": "partly_cloudy.svg",
+    "119": "cloudy.svg",
+    "122": "overcast.svg",
+    "143": "mist.svg",
+    "176": "patchy_rain_nearby.svg",
+    "179": "patchy_light_snow.svg",
+    "182": "patchy_light_snow.svg",
+    "185": "patchy_light_rain.svg",
+    "200": "thundery_outbreaks_nearby.svg",
+    "227": "patchy_light_snow.svg",
+    "230": "patchy_light_snow.svg",
+    "248": "fog.svg",
+    "260": "fog.svg",
+    "263": "light_rain_shower.svg",
+    "266": "light_rain_shower.svg",
+    "281": "light_rain.svg",
+    "284": "light_rain.svg",
+    "293": "light_rain.svg",
+    "296": "light_rain.svg",
+    "299": "rain.svg",
+    "302": "rain.svg",
+    "305": "rain.svg",
+    "308": "rain.svg",
+    "353": "light_rain_shower.svg",
+    "356": "rain.svg",
+    "359": "rain.svg",
+    "386": "patchy_light_rain_with_thunder.svg",
+    "389": "patchy_light_rain_with_thunder.svg",
+    "392": "patchy_light_snow_with_thunder.svg",
+    "395": "patchy_light_snow_with_thunder.svg",
+    "default": "overcast.svg"
+  };
+
+  function getWeatherIcon(code, isNight) {
+    const period = isNight ? "night" : "day";
+    let iconBase = WEATHER_ICON_MAP[code] || WEATHER_ICON_MAP["default"];
+    
+    // Fallback for clear night which has a specific name in erikflowers set
+    if (isNight && code === "113") return "night_clear.svg";
+    
+    return `${period}_${iconBase}`;
+  }
+
   async function updateForecast() {
     const forecastBody = document.getElementById('forecast-body');
     const hourlyBody = document.getElementById('hourly-body');
@@ -85,7 +133,7 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       
       const data = await response.json();
-      if (!data || !data.weather || !Array.isArray(data.weather)) {
+      if (!data || !data.weather || !Array.isArray(data.weather) || data.weather.length === 0) {
         throw new Error("Invalid weather data format received");
       }
       const weatherForecast = data.weather;
@@ -97,23 +145,32 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
         row.style.borderBottom = '1px solid #e0e5ff';
         
         const date = day.date || 'N/A';
-        const condition = (day.hourly && day.hourly[0] && day.hourly[0].weatherDesc && day.hourly[0].weatherDesc[0]) 
-                          ? day.hourly[0].weatherDesc[0].value : 'N/A';
+        const hourly0 = (day.hourly && day.hourly[0]) ? day.hourly[0] : {};
+        const condition = (hourly0.weatherDesc && hourly0.weatherDesc[0]) 
+                          ? hourly0.weatherDesc[0].value : 'N/A';
+        const weatherCode = hourly0.weatherCode || "";
+        const iconName = getWeatherIcon(weatherCode, false);
+        const iconHtml = `<img src="../icons/weather/${iconName}" style="width: 32px; height: 32px;" alt="${condition}">`;
+
         const high = day.maxtempF || 'N/A';
         const low = day.mintempF || 'N/A';
-        const precip = (day.hourly && day.hourly[0]) ? day.hourly[0].precipMM : '0';
+        const precip = hourly0.precipMM || '0';
 
         // Calculate Wind Range
-        const windSpeeds = (day.hourly || []).map(h => parseFloat(h.windspeedMiles || 0));
-        const minWind = Math.min(...windSpeeds);
-        const maxWind = Math.max(...windSpeeds);
+        const windSpeeds = (day.hourly || [])
+          .map(h => parseFloat(h.windspeedMiles))
+          .filter(s => !isNaN(s));
+        
+        const minWind = windSpeeds.length > 0 ? Math.min(...windSpeeds) : 'N/A';
+        const maxWind = windSpeeds.length > 0 ? Math.max(...windSpeeds) : 'N/A';
+        const windDisplay = minWind === 'N/A' ? 'N/A' : `${minWind}–${maxWind} mph`;
 
         // Calculate Photo Suitability for Daylight Hours
         const astro = (day.astronomy && day.astronomy[0]) ? day.astronomy[0] : {};
         const sunriseMins = timeToMins(astro.sunrise);
         const sunsetMins = timeToMins(astro.sunset);
         
-        const daylightHours = day.hourly.filter(h => {
+        const daylightHours = (day.hourly || []).filter(h => {
           const tVal = parseInt(h.time);
           const mins = tVal <= 23 ? tVal * 60 : (Math.floor(tVal/100)*60 + (tVal%100));
           return sunriseMins !== null && sunsetMins !== null && mins >= sunriseMins && mins < sunsetMins;
@@ -130,7 +187,8 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
             const h = daylightHours[idx];
             const ws = parseFloat(h.windspeedMiles);
             let color = '#f44336';
-            if (ws <= 5) color = '#4caf50';
+            if (isNaN(ws)) color = '#ccc';
+            else if (ws <= 5) color = '#4caf50';
             else if (ws <= 10) color = '#ffeb3b';
             else if (ws <= 15) color = '#ff9800';
             photoCircles += `<div style="width: 10px; height: 10px; border-radius: 50%; background-color: ${color}; border: 1px solid rgba(0,0,0,0.1);"></div>`;
@@ -142,18 +200,20 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
 
         row.innerHTML = `
           <td style="padding: 10px 8px; color: #333; font-weight: 600; white-space: nowrap;">${date}</td>
-          <td style="padding: 10px 8px; color: #333; font-weight: 700; white-space: nowrap;">${low} - ${high}°F</td>
+          <td style="padding: 10px 8px; text-align: center;">${iconHtml}</td>
           <td style="padding: 10px 8px; color: #555;">${condition}</td>
-          <td style="padding: 10px 8px; color: #555; white-space: nowrap;">${minWind}–${maxWind} mph</td>
+          <td style="padding: 10px 8px; color: #333; font-weight: 700; white-space: nowrap;">${low} - ${high}°F</td>
+          <td style="padding: 10px 8px; color: #555; white-space: nowrap;">${windDisplay}</td>
           <td style="padding: 10px 8px; text-align: center; white-space: nowrap;">${photoCircles}</td>
           <td style="padding: 10px 8px; color: #555; white-space: nowrap;">${precip} mm</td>
         `;
         forecastBody.appendChild(row);
       });
 
-      // Populate Hourly Data for Today
-      const todayHourly = weatherForecast[0].hourly;
-      const astronomy = (weatherForecast[0].astronomy && weatherForecast[0].astronomy[0]) ? weatherForecast[0].astronomy[0] : {};
+       // Populate Hourly Data for Today
+       const day0 = weatherForecast[0] || {};
+       const todayHourly = day0.hourly || [];
+       const astronomy = (day0.astronomy && day0.astronomy[0]) ? day0.astronomy[0] : {};
       const sunriseStr = astronomy.sunrise || '';
       const sunsetStr = astronomy.sunset || '';
 
@@ -206,24 +266,29 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
           bgColor = '#fff9c4'; // Yellow
           rowContent = `
             <td style="padding: 10px 15px; color: #333; font-weight: 600;">${item.timeStr}</td>
+            <td style="padding: 10px 15px; text-align: center;"><img src="../icons/weather/sunrise.svg" style="width: 24px; height: 24px;" alt="Sunrise"></td>
+            <td colspan="1" style="border: none; background: transparent;"></td>
+            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600;">Sunrise</td>
             <td colspan="4" style="border: none; background: transparent;"></td>
-            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600; font-size: 0.9em;">🌅 Sunrise</td>
-            <td style="border: none; background: transparent;"></td>
           `;
         } else if (item.type === 'sunset') {
           bgColor = '#f5f5f5'; // Grey
           rowContent = `
             <td style="padding: 10px 15px; color: #333; font-weight: 600;">${item.timeStr}</td>
+            <td style="padding: 10px 15px; text-align: center;"><img src="../icons/weather/sunset.svg" style="width: 24px; height: 24px;" alt="Sunset"></td>
+            <td colspan="1" style="border: none; background: transparent;"></td>
+            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600;">Sunset</td>
             <td colspan="4" style="border: none; background: transparent;"></td>
-            <td style="padding: 10px 15px; color: #3f51b5; font-weight: 600; font-size: 0.9em;">🌇 Sunset</td>
-            <td style="border: none; background: transparent;"></td>
           `;
         } else {
           // Hourly row
+          let isNight = false;
           if (sunriseMins !== null && item.mins < sunriseMins) {
             bgColor = '#f5f5f5'; // Grey before sunrise
+            isNight = true;
           } else if (sunsetMins !== null && item.mins >= sunsetMins) {
             bgColor = '#f5f5f5'; // Grey after sunset
+            isNight = true;
           }
           
           const hour = item.data;
@@ -248,14 +313,17 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
             displayTime = `${h12}:${m.toString().padStart(2, '0')} ${amp}`;
           }
 
+          const weatherCode = hour.weatherCode || "";
+          const conditionText = (hour.weatherDesc && hour.weatherDesc[0]) ? hour.weatherDesc[0].value : 'N/A';
+          const iconName = getWeatherIcon(weatherCode, isNight);
+          const iconHtml = `<img src="../icons/weather/${iconName}" style="width: 24px; height: 24px;" alt="${conditionText}">`;
+
           const windSpeed = parseFloat(hour.windspeedMiles);
           let photoColor = '#ccc';
           
           // Check if it's before sunrise or after sunset
-          if (sunriseMins !== null && item.mins < sunriseMins) {
+          if (isNight) {
             photoColor = '#555'; // Dark gray for night/dawn
-          } else if (sunsetMins !== null && item.mins >= sunsetMins) {
-            photoColor = '#555'; // Dark gray for night/dusk
           } else {
             // Daylight wind suitability
             if (windSpeed <= 5) photoColor = '#4caf50'; // Green
@@ -264,11 +332,12 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
             else photoColor = '#f44336'; // Red
           }
 
-          rowContent = `
-            <td style="padding: 10px 15px; color: #333; font-weight: 600;">${displayTime}</td>
-            <td style="padding: 10px 15px; color: #333;">${hour.tempF}°F</td>
-            <td style="padding: 10px 15px; color: #555;">${hour.weatherDesc[0].value}</td>
-            <td style="padding: 10px 15px; color: #555; white-space: nowrap;">
+           rowContent = `
+             <td style="padding: 10px 15px; color: #333; font-weight: 600;">${displayTime}</td>
+             <td style="padding: 10px 15px; text-align: center;">${iconHtml}</td>
+             <td style="padding: 10px 15px; color: #555;">${conditionText}</td>
+             <td style="padding: 10px 15px; color: #333;">${hour.tempF || 'N/A'}°F</td>
+             <td style="padding: 10px 15px; color: #555; white-space: nowrap;">
               <div style="display: flex; align-items: center; gap: 6px;">
                 <div style="position: relative; width: 16px; height: 16px;">
                   <div style="position: absolute; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-bottom: 10px solid #3f51b5; left: 5px; top: 3px; transform: rotate(${hour.winddirDegree || 0}deg);"></div>
