@@ -39,13 +39,20 @@ export default {
       let response = await cache.match(request);
 
       if (!response) {
-        // Cache miss: Fetch from USACE
-        response = await fetch(targetUrl);
+        // Cache miss: Fetch from target
+        const fetchOptions = {};
+        if (url.pathname === "/weather") {
+          fetchOptions.headers = { "Accept": "application/json" };
+        }
         
-        // We must create a new response to modify headers and store it in cache
-        // We set Cache-Control to 6 hours (21600 seconds) to match USACE update frequency
+        response = await fetch(targetUrl, fetchOptions);
+        
+        // Create a new response to modify headers and store it in cache
         response = new Response(response.body, response);
-        response.headers.set('Cache-Control', 'public, max-age=21600');
+        
+        // Set cache duration: 6 hours for USACE, 15 mins for weather
+        const cacheMaxAge = (url.pathname === "/weather") ? 900 : 21600;
+        response.headers.set('Cache-Control', `public, max-age=${cacheMaxAge}`);
         
         // Store the response in cache in the background
         ctx.waitUntil(cache.put(request, response.clone()));
