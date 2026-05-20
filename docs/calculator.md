@@ -15,7 +15,7 @@ Use this interactive tool to plan your shot based on your gear and the distance 
           <option value="Sony A1 II FF">Sony A1 II FF</option>
           <option value="Canon R5 II FF">Canon R5 II FF</option>
           <option value="Sony A7 V FF">Sony A7 V FF</option>
-          <option value="Canon R7 APS-C">Canon R7 APS-C</option>
+          <option value="Canon R7 APS-C" selected>Canon R7 APS-C</option>
           <option value="Canon EOS R10 APS-C">Canon EOS R10 APS-C</option>
           <option value="OM System M4/3">OM System M4/3</option>
         </select>
