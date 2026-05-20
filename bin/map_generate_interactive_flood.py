@@ -145,7 +145,16 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
         "Salt Creek": [39.13144, -86.39161],
     }
     
-    buttons_html = '<div style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: Arial, sans-serif;">'
+    buttons_html = '<div id="flood-control-panel" style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: Arial, sans-serif; min-width: 200px;">'
+    
+    # Panel Header with Toggle
+    buttons_html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">'
+    buttons_html += '<strong style="font-size: 14px; color: #333;">Flood Controls</strong>'
+    buttons_html += '<button onclick="togglePanel()" id="panel-toggle-btn" style="cursor: pointer; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 10px; padding: 2px 5px;">Minimize</button>'
+    buttons_html += '</div>'
+    
+    # Content Wrapper
+    buttons_html += '<div id="panel-content">'
     
     # Flood Layer Controls
     buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
@@ -172,9 +181,22 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
         js_call = f"var m = Object.values(window).find(v => v instanceof L.Map); if(m) m.setView([{coords[0]}, {coords[1]}], 17);"
         buttons_html += f'<button onclick="{js_call}" style="display: block; width: 100%; margin: 5px 0; padding: 5px 10px; cursor: pointer; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; text-align: left; font-size: 12px;">{name}</button>'
     
-    buttons_html += '</div>'
+    buttons_html += '</div>' # Close panel-content
+    buttons_html += '</div>' # Close flood-control-panel
     
     script_html = '<script>'
+    # Function to toggle panel visibility
+    script_html += 'function togglePanel() {'
+    script_html += '  const content = document.getElementById("panel-content");'
+    script_html += '  const btn = document.getElementById("panel-toggle-btn");'
+    script_html += '  if (content.style.display === "none") {'
+    script_html += '    content.style.display = "block";'
+    script_html += '    btn.innerText = "Minimize";'
+    script_html += '  } else {'
+    script_html += '    content.style.display = "none";'
+    script_html += '    btn.innerText = "Expand";'
+    script_html += '  }'
+    script_html += '}'
     # Function to toggle flood layers
     script_html += 'function updateFloodLayer() {'
     script_html += '  const visible = document.getElementById("flood-visible").checked;'
