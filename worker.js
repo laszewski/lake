@@ -73,6 +73,11 @@ export default {
       finalResponse.headers.set('Access-Control-Allow-Methods', 'GET, HEAD, POST, OPTIONS');
       finalResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type');
       
+      // Force application/json for weather
+      if (pathname === "/weather") {
+        finalResponse.headers.set('Content-Type', 'application/json; charset=utf-8');
+      }
+      
       return finalResponse;
     } catch (e) {
       return new Response('Error fetching data: ' + e.message, { 

@@ -126,15 +126,34 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
       return hrs * 60 + mins;
     };
 
+    const errorEl = document.createElement('div');
+    errorEl.style.display = 'none';
+    errorEl.style.color = '#d32f2f';
+    errorEl.style.background = '#fdecea';
+    errorEl.style.padding = '15px';
+    errorEl.style.borderRadius = '10px';
+    errorEl.style.marginBottom = '20px';
+    errorEl.style.fontSize = '0.95em';
+    document.getElementById('forecast-card').prepend(errorEl);
+
+    function showError(msg) {
+      console.error(msg);
+      errorEl.innerText = msg;
+      errorEl.style.display = 'block';
+    }
+
     try {
       const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/weather`;
+      console.log('Fetching forecast from:', proxyUrl);
       
-      const response = await fetch(proxyUrl);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await fetch(proxyUrl, { cache: 'no-cache' });
+      if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
       
       const data = await response.json();
+      console.log('Forecast data received:', data);
+      
       if (!data || !data.weather || !Array.isArray(data.weather) || data.weather.length === 0) {
-        throw new Error("Invalid weather data format received");
+        throw new Error("Invalid forecast data format received from server");
       }
       const weatherForecast = data.weather;
       

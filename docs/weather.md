@@ -112,16 +112,35 @@ To help you plan your visit, we provide the current weather conditions for the L
     const moonEl = document.getElementById('weather-moon');
     const timeEl = document.getElementById('weather-time');
 
+    const errorEl = document.createElement('div');
+    errorEl.id = 'weather-error';
+    errorEl.style.display = 'none';
+    errorEl.style.color = '#d32f2f';
+    errorEl.style.background = '#fdecea';
+    errorEl.style.padding = '10px';
+    errorEl.style.borderRadius = '5px';
+    errorEl.style.marginBottom = '15px';
+    errorEl.style.fontSize = '0.9em';
+    document.getElementById('weather-card').prepend(errorEl);
+
+    function showError(msg) {
+      console.error(msg);
+      errorEl.innerText = msg;
+      errorEl.style.display = 'block';
+    }
+
     try {
       const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/weather`;
+      console.log('Fetching weather from:', proxyUrl);
       
-      const response = await fetch(proxyUrl);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await fetch(proxyUrl, { cache: 'no-cache' });
+      if (!response.ok) throw new Error(`Fetch failed: ${response.status} ${response.statusText}`);
       
       const data = await response.json();
+      console.log('Weather data received:', data);
       
       if (!data || !data.current_condition || !data.weather) {
-        throw new Error("Invalid weather data format received");
+        throw new Error("Invalid weather data format received from server");
       }
 
       const current = data.current_condition[0] || {};
