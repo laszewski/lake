@@ -39,8 +39,8 @@ To ensure you are seeing the most accurate and up-to-date information, we provid
      const timeEl = document.getElementById('lake-level-time');
      const historyEl = document.getElementById('lake-level-history');
      
-     try {
-        const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev`;
+    try {
+       const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/level`;
         const sensorName = encodeURIComponent("Monroe.Elev.Inst.0.0.lrldlb-rev");
         
         // 1. Fetch Current Level

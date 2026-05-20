@@ -79,13 +79,15 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
     };
 
     try {
-      const targetUrl = `https://wttr.in/Bloomington,Indiana?format=j1`;
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+      const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/weather`;
       
       const response = await fetch(proxyUrl);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       
       const data = await response.json();
+      if (!data || !data.weather || !Array.isArray(data.weather)) {
+        throw new Error("Invalid weather data format received");
+      }
       const weatherForecast = data.weather;
       
       forecastBody.innerHTML = '';
@@ -94,14 +96,15 @@ Plan your trip with the 3-day weather forecast for the Bloomington, IN area.
         const row = document.createElement('tr');
         row.style.borderBottom = '1px solid #e0e5ff';
         
-        const date = day.date;
-        const condition = (day.hourly && day.hourly[0]) ? day.hourly[0].weatherDesc[0].value : 'N/A';
-        const high = day.maxtempF;
-        const low = day.mintempF;
+        const date = day.date || 'N/A';
+        const condition = (day.hourly && day.hourly[0] && day.hourly[0].weatherDesc && day.hourly[0].weatherDesc[0]) 
+                          ? day.hourly[0].weatherDesc[0].value : 'N/A';
+        const high = day.maxtempF || 'N/A';
+        const low = day.mintempF || 'N/A';
         const precip = (day.hourly && day.hourly[0]) ? day.hourly[0].precipMM : '0';
 
         // Calculate Wind Range
-        const windSpeeds = day.hourly.map(h => parseFloat(h.windspeedMiles));
+        const windSpeeds = (day.hourly || []).map(h => parseFloat(h.windspeedMiles || 0));
         const minWind = Math.min(...windSpeeds);
         const maxWind = Math.max(...windSpeeds);
 

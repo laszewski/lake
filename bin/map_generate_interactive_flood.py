@@ -175,6 +175,7 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     buttons_html += '<div style="margin-top: 10px; font-size: 12px; color: #666;">Above Normal:</div>'
     buttons_html += '<div id="lake-level-relative" style="font-size: 18px; font-weight: bold; color: #007bff;">Loading...</div>'
     buttons_html += '</div>'
+    
     buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Quick Zoom</h4>'
     
     for name, coords in locations.items():
@@ -209,7 +210,7 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     script_html += '}'
     
     # Fetch lake level
-    script_html += 'fetch("https://monroe-lake-level.laszewski.workers.dev")'
+    script_html += 'fetch("https://monroe-lake-level.laszewski.workers.dev/level")'
     script_html += '.then(response => response.json())'
     script_html += '.then(data => { const latest = data.values[data.values.length - 1][1]; document.getElementById("lake-level-value").innerText = latest + " ft"; const relative = (latest - 538.00).toFixed(2); document.getElementById("lake-level-relative").innerText = relative + " ft"; })'
     script_html += '.catch(err => { document.getElementById("lake-level-value").innerText = "Error"; });'

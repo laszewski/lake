@@ -18,7 +18,7 @@ export default {
     // Handle weather requests
     if (url.pathname === "/weather") {
       targetUrl = "https://wttr.in/Bloomington,Indiana?format=j1";
-    } else {
+    } else if (url.pathname === "/level" || url.pathname === "/") {
       // Handle USACE lake level requests
       const baseTargetUrl = "https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries";
       const queryString = url.search;
@@ -31,6 +31,8 @@ export default {
         const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
         targetUrl = `${baseTargetUrl}?name=Monroe.Elev.Inst.0.0.lrldlb-rev&begin=${yesterday.toISOString()}&end=${now.toISOString()}`;
       }
+    } else {
+      return new Response("Not Found", { status: 404 });
     }
 
     try {
