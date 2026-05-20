@@ -35,7 +35,10 @@ To help you plan your visit, we provide the current weather conditions for the L
       </div>
       <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
         <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Condition</span>
-        <span id="weather-cond" style="font-size: 1.4em; font-weight: 700; color: #1a237e;">Loading...</span>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
+          <div id="weather-cond-icon" style="width: 40px; height: 40px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center;"></div>
+          <span id="weather-cond" style="font-size: 1.1em; font-weight: 700; color: #1a237e; line-height: 1.2;">Loading...</span>
+        </div>
       </div>
        <div style="padding: 15px; background: white; border-radius: 15px; border: 1px solid #e0e5ff;">
          <span style="font-size: 0.8em; color: #666; text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 5px;">Cloud Cover</span>
@@ -93,6 +96,61 @@ To help you plan your visit, we provide the current weather conditions for the L
 
 <script>
 (function() {
+  const WEATHER_ICON_MAP = {
+    // Codes from https://www.worldweatheronline.com/feed/wwo-codes.txt
+    "113": "sunny.svg",
+    "116": "partly_cloudy.svg",
+    "119": "cloudy.svg",
+    "122": "overcast.svg",
+    "143": "mist.svg",
+    "176": "patchy_rain_nearby.svg",
+    "179": "patchy_light_snow.svg",
+    "182": "patchy_light_snow.svg",
+    "185": "patchy_light_rain.svg",
+    "200": "thundery_outbreaks_nearby.svg",
+    "227": "patchy_light_snow.svg",
+    "230": "patchy_light_snow.svg",
+    "248": "fog.svg",
+    "260": "fog.svg",
+    "263": "light_rain_shower.svg",
+    "266": "light_rain_shower.svg",
+    "281": "light_rain.svg",
+    "284": "light_rain.svg",
+    "293": "light_rain.svg",
+    "296": "light_rain.svg",
+    "299": "rain.svg",
+    "302": "rain.svg",
+    "305": "rain.svg",
+    "308": "rain.svg",
+    "353": "light_rain_shower.svg",
+    "356": "rain.svg",
+    "359": "rain.svg",
+    "386": "patchy_light_rain_with_thunder.svg",
+    "389": "patchy_light_rain_with_thunder.svg",
+    "392": "patchy_light_snow_with_thunder.svg",
+    "395": "patchy_light_snow_with_thunder.svg",
+    "default": "overcast.svg"
+  };
+
+  function getWeatherIcon(code, isNight) {
+    const period = isNight ? "night" : "day";
+    let iconBase = WEATHER_ICON_MAP[code] || WEATHER_ICON_MAP["default"];
+    if (isNight && code === "113") return "night_clear.svg";
+    return `${period}_${iconBase}`;
+  }
+
+  function timeToMins(t) {
+    if (!t) return null;
+    const match = t.match(/(\d+):?(\d+)?\s*(AM|PM)?/i);
+    if (!match) return null;
+    let hrs = parseInt(match[1]);
+    const mins = match[2] ? parseInt(match[2]) : 0;
+    const amp = match[3];
+    if (amp && amp.toUpperCase() === 'PM' && hrs < 12) hrs += 12;
+    if (amp && amp.toUpperCase() === 'AM' && hrs === 12) hrs = 0;
+    return hrs * 60 + mins;
+  }
+
   async function updateWeather() {
     const tempEl = document.getElementById('weather-temp');
     const rangeEl = document.getElementById('weather-range');
@@ -100,6 +158,7 @@ To help you plan your visit, we provide the current weather conditions for the L
     const windEl = document.getElementById('weather-wind');
     const uvEl = document.getElementById('weather-uv');
     const condEl = document.getElementById('weather-cond');
+    const condIconEl = document.getElementById('weather-cond-icon');
     const cloudEl = document.getElementById('weather-clouds');
     const feelsEl = document.getElementById('weather-feels');
     const visEl = document.getElementById('weather-vis');
@@ -172,7 +231,26 @@ To help you plan your visit, we provide the current weather conditions for the L
       
       if (uvDotEl) uvDotEl.style.backgroundColor = uvColor;
       uvEl.innerText = (current.uvIndex !== undefined) ? `${current.uvIndex}${uvLabel}` : 'N/A';
-      condEl.innerText = (current.weatherDesc && current.weatherDesc[0]) ? current.weatherDesc[0].value : 'N/A';
+      
+      const conditionText = (current.weatherDesc && current.weatherDesc[0]) ? current.weatherDesc[0].value : 'N/A';
+      condEl.innerText = conditionText;
+      
+      // Determine Day/Night for Icon
+      const sunriseMins = timeToMins(astronomy.sunrise);
+      const sunsetMins = timeToMins(astronomy.sunset);
+      const now = new Date();
+      // Get current Bloomington mins
+      const bloomingtonNow = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+      const currentMins = bloomingtonNow.getHours() * 60 + bloomingtonNow.getMinutes();
+      
+      const isNight = sunriseMins !== null && sunsetMins !== null && (currentMins < sunriseMins || currentMins >= sunsetMins);
+      const weatherCode = current.weatherCode || "";
+      const iconName = getWeatherIcon(weatherCode, isNight);
+      
+      if (condIconEl) {
+        condIconEl.innerHTML = `<img src="../icons/weather/${iconName}" style="width: 40px; height: 40px;" alt="${conditionText}">`;
+      }
+
       cloudEl.innerText = current.cloudcover ? `${current.cloudcover}%` : 'N/A';
       feelsEl.innerText = current.FeelsLikeF ? `${current.FeelsLikeF}°F` : 'N/A';
       visEl.innerText = current.visibility ? `${current.visibility} mi` : 'N/A';
@@ -198,6 +276,7 @@ To help you plan your visit, we provide the current weather conditions for the L
       elements.forEach(el => { if(el) el.innerText = 'Error'; });
       if(uvDotEl) uvDotEl.style.backgroundColor = '#ccc';
       if(windArrowEl) windArrowEl.style.transform = 'rotate(0deg)';
+      if(condIconEl) condIconEl.innerHTML = '';
     }
   }
 
