@@ -113,8 +113,7 @@ To help you plan your visit, we provide the current weather conditions for the L
     const timeEl = document.getElementById('weather-time');
 
     try {
-      const targetUrl = `https://wttr.in/Bloomington,Indiana?format=j1`;
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+      const proxyUrl = `https://monroe-lake-level.laszewski.workers.dev/weather`;
       
       const response = await fetch(proxyUrl);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);

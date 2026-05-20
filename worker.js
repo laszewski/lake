@@ -13,20 +13,24 @@ export default {
 
     const url = new URL(request.url);
     
-    // 1. Define the target USACE API base URL
-    const baseTargetUrl = "https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries";
-    
-    // Use the query parameters from the incoming request (e.g., ?name=...&begin=...&end=...)
-    const queryString = url.search;
-    
     let targetUrl;
-    if (queryString) {
-      targetUrl = `${baseTargetUrl}${queryString}`;
+    
+    // Handle weather requests
+    if (url.pathname === "/weather") {
+      targetUrl = "https://wttr.in/Bloomington,Indiana?format=j1";
     } else {
-      // Default to the last 24 hours for the primary sensor
-      const now = new Date();
-      const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
-      targetUrl = `${baseTargetUrl}?name=Monroe.Elev.Inst.0.0.lrldlb-rev&begin=${yesterday.toISOString()}&end=${now.toISOString()}`;
+      // Handle USACE lake level requests
+      const baseTargetUrl = "https://water.usace.army.mil/cda/reporting/providers/lrl/timeseries";
+      const queryString = url.search;
+      
+      if (queryString) {
+        targetUrl = `${baseTargetUrl}${queryString}`;
+      } else {
+        // Default to the last 24 hours for the primary sensor
+        const now = new Date();
+        const yesterday = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+        targetUrl = `${baseTargetUrl}?name=Monroe.Elev.Inst.0.0.lrldlb-rev&begin=${yesterday.toISOString()}&end=${now.toISOString()}`;
+      }
     }
 
     try {
