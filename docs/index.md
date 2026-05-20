@@ -4,10 +4,19 @@ Welcome to the practitioner's guide for monitoring and documenting raptors. This
 
 ## Quick Links
 
-<div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 40px;">
+<div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
   <a href="live-lake-level/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Lake Level</a>
   <a href="flood-map-interactive/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Flood Map</a>
   <a href="forecast/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Forecast</a>
+</div>
+<div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+  <a href="maps/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Maps</a>
+  <a href="weather/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Weather</a>
+</div>
+<div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 40px;">
+  <a href="age/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Eagle Age</a>
+  <a href="birds/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Birds</a>
+  <a href="observations/" style="display: inline-block; padding: 12px 24px; background: #3f51b5; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Observations</a>
 </div>
 
 ***
