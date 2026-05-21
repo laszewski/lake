@@ -2,6 +2,7 @@ import os
 import requests
 import numpy as np
 import rasterio
+import base64
 from rasterio.windows import from_bounds
 import folium
 from folium import plugins
@@ -112,6 +113,11 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     rgba_red[..., 0] = 200    # R
     rgba_red[..., 3] = alpha 
     
+    # Embed DEM data for client-side querying
+    # Convert float32 array to base64 string for efficient embedding
+    dem_bytes = reprojected_dem.tobytes()
+    dem_b64 = base64.b64encode(dem_bytes).decode('utf-8')
+    
     # Initialize Folium Map
     m = folium.Map(location=[39.06, -86.45], zoom_start=13, tiles=None)
     
@@ -175,7 +181,7 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     
     # Flood Layer Controls
     buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
-    buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Flood Layer</h4>'
+    buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Map Tools</h4>'
     buttons_html += '<div style="margin-bottom: 10px; font-size: 13px;">'
     buttons_html += '<input type="checkbox" id="flood-visible" checked onchange="updateFloodLayer()"> '
     buttons_html += '<label for="flood-visible">Show Flood Area</label>'
@@ -201,6 +207,14 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     buttons_html += '</div>'
     buttons_html += '</div>'
     
+    buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
+    buttons_html += '<div style="margin-bottom: 5px; font-size: 13px;">'
+    buttons_html += '<input type="checkbox" id="query-mode" onchange="updateQueryMode()"> '
+    buttons_html += '<label for="query-mode" style="font-weight: bold; font-size: 14px; color: #333;">Point Info</label>'
+    buttons_html += '</div>'
+    buttons_html += '<div id="point-info" style="font-size: 12px; color: #666; line-height: 1.4;">Click map to query elevation</div>'
+    buttons_html += '</div>'
+    
     buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Quick Zoom</h4>'
     
     for name, coords in locations.items():
@@ -211,6 +225,22 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     buttons_html += '</div>' # Close flood-control-panel
     
     script_html = '<script>'
+    
+    # Embed the DEM data as a Float32Array
+    script_html += f'const demB64 = "{dem_b64}";'
+    script_html += 'const demData = new Float32Array(Uint8Array.from(atob(demB64), c => c.charCodeAt(0)).buffer);'
+    
+    # Function to update query mode status
+    script_html += 'function updateQueryMode() {'
+    script_html += '  const enabled = document.getElementById("query-mode").checked;'
+    script_html += '  const info = document.getElementById("point-info");'
+    script_html += '  if (enabled) {'
+    script_html += '    info.innerText = "Query Mode ON: Click map to get elevation";'
+    script_html += '  } else {'
+    script_html += '    info.innerText = "Click map to query elevation (Enable Query Mode first)";'
+    script_html += '  }'
+    script_html += '}'
+
     # Function to toggle panel visibility
     script_html += 'function togglePanel() {'
     script_html += '  const content = document.getElementById("panel-content");'
@@ -242,13 +272,52 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     script_html += '  document.getElementById("view-lat").innerText = sw.lat.toFixed(6) + " to " + ne.lat.toFixed(6);'
     script_html += '  document.getElementById("view-lon").innerText = sw.lng.toFixed(6) + " to " + ne.lng.toFixed(6);'
     script_html += '}'
+
+    # Coordinate transformation and sampling logic
+    script_html += 'function getElevationAt(lat, lon) {'
+    script_html += '  const R = 6378137;'
+    script_html += '  const x = R * lon * Math.PI / 180;'
+    script_html += '  const y = R * Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI / 180) / 2));'
+    script_html += '  const col = Math.floor((x - ' + str(dst_transform.c) + ') / ' + str(dst_transform.a) + ');'
+    script_html += '  const row = Math.floor((y - ' + str(dst_transform.f) + ') / ' + str(dst_transform.e) + ');'
+    script_html += '  if (col >= 0 && col < ' + str(dst_width) + ' && row >= 0 && row < ' + str(dst_height) + ') {'
+    script_html += '    return demData[row * ' + str(dst_width) + ' + col];'
+    script_html += '  }'
+    script_html += '  return null;'
+    script_html += '}'
     
-    # Initialize map event listener for coordinates
+    # Initialize map event listener for coordinates and clicks
     script_html += 'window.onload = function() {'
     script_html += '  const map = Object.values(window).find(v => v instanceof L.Map);'
     script_html += '  if (map) {'
     script_html += '    map.on("moveend", function() { updateViewCoords(map); });'
     script_html += '    updateViewCoords(map);'
+    script_html += '    '
+    script_html += '    let lastMarker = null;'
+    script_html += '    map.on("click", function(e) {'
+    script_html += '      if (!document.getElementById("query-mode").checked) return;'
+    script_html += '      const lat = e.latlng.lat;'
+    script_html += '      const lon = e.latlng.lng;'
+    script_html += '      const elev = getElevationAt(lat, lon);'
+    script_html += '      const lakeLevel_m = ' + str(water_level_m) + ';'
+    script_html += '      const lakeLevel_ft = ' + str(water_level_ft) + ';'
+    script_html += '      '
+    script_html += '      if (elev === null || isNaN(elev) || elev < -100) {'
+    script_html += '        document.getElementById("point-info").innerHTML = `Lat: ${lat.toFixed(5)}<br>Lon: ${lon.toFixed(5)}<br>No elevation data`;'
+    script_html += '        if (lastMarker) map.removeLayer(lastMarker);'
+    script_html += '        lastMarker = L.circleMarker([lat, lon], {radius: 5, color: "gray", fillOpacity: 0.8}).addTo(map);'
+    script_html += '        return;'
+    script_html += '      }'
+    script_html += '      '
+    script_html += '      const elev_ft = elev / 0.3048;'
+    script_html += '      const isHigher = elev_ft > lakeLevel_ft;'
+    script_html += '      const color = isHigher ? "green" : "blue";'
+    script_html += '      const status = isHigher ? "Above Lake" : "Below Lake/Flooded";'
+    script_html += '      '
+    script_html += '      document.getElementById("point-info").innerHTML = `Lat: ${lat.toFixed(6)}<br>Lon: ${lon.toFixed(6)}<br>Elev: ${elev_ft.toFixed(2)} ft<br>Status: <span style="color:${color}; font-weight:bold;">${status}</span>`;'
+    script_html += '      if (lastMarker) map.removeLayer(lastMarker);'
+    script_html += '      lastMarker = L.circleMarker([lat, lon], {radius: 6, color: color, weight: 2, fillColor: color, fillOpacity: 0.6}).addTo(map);'
+    script_html += '    });'
     script_html += '  }'
     script_html += '};'
     
