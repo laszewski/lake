@@ -6,27 +6,29 @@ from rasterio.windows import from_bounds
 import folium
 from folium import plugins
 from folium.raster_layers import ImageOverlay
+from matplotlib.path import Path
 
-def download_usgs_dem():
-    """Downloads the USGS DEM tile for the Monroe Lake area."""
-    url = "https://s3.amazonaws.com/usgs-dem-tiles/13_n40w087.tif"
-    output_file = "docs/data/USGS_13_n40w087.tif"
-    
-    if os.path.exists(output_file):
-        print(f"Using existing DEM file: {output_file}")
-        return output_file
+def get_dem_file():
+    """Returns the path to the processed lake elevation file."""
+    return "docs/data/lake.tif"
 
-    print(f"Downloading DEM tile from {url}...")
-    response = requests.get(url, stream=True)
-    if response.status_code == 200:
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
-        with open(output_file, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-        print(f"DEM tile saved to {output_file}")
-        return output_file
-    else:
-        raise Exception(f"Failed to download DEM: {response.status_code}")
+# Exclusion polygon for area below Monroe Dam (Lon, Lat)
+EXCLUSION_POLYGON = [
+    (-86.510084, 39.0094025),
+    (-86.5128471, 39.0066343),
+    (-86.5150358, 39.0068011),
+    (-86.5199281, 39.0112363),
+    (-86.5330173, 39.0109695),
+    (-86.5327598, 38.9894912),
+    (-86.4917327, 38.9900249),
+    (-86.4918186, 39.001832),
+    (-86.497698, 39.0026991),
+    (-86.5030244, 39.0090356),
+    (-86.5046981, 39.0107363),
+    (-86.5090111, 39.0110531),
+    (-86.5098158, 39.009961),
+    (-86.510084, 39.0094025)
+]
 
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 
@@ -36,20 +38,18 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     
     print(f"Processing DEM for water level: {water_level_ft} ft...")
     
-    # Monroe Lake bounds in WGS84
-    lon_min, lon_max = -86.55, -86.30
-    lat_min, lat_max = 38.98, 39.12
+    # Monroe Lake bounds in WGS84 (Updated to match final selection)
+    lon_min, lon_max = -86.525843, -86.289218
+    lat_min, lat_max = 38.993715, 39.161233
     
     dst_crs = 'EPSG:3857' # Web Mercator (Leaflet/Folium standard)
     
     with rasterio.open(dem_file) as src:
         # Calculate transform and dimensions for the target reprojected window
-        # We want to reproject into a window defined by our WGS84 bounds
-        from rasterio.warp import transform_bounds
+        from rasterio.warp import transform_bounds, transform as transform_coords
         w, s, e, n = transform_bounds(src.crs, dst_crs, lon_min, lat_min, lon_max, lat_max)
         
         # Define target transform for the output image
-        # We'll use a fixed resolution (e.g., 10m)
         res = 10 # meters
         dst_width = int((e - w) / res)
         dst_height = int((n - s) / res)
@@ -76,15 +76,32 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     # Handle nodata and determine alpha
     # Use 0 for dry/nodata, and 125 for flooded
     is_nodata = (reprojected_dem == src.nodata) | np.isnan(reprojected_dem)
-    is_flooded = reprojected_dem <= water_level_m
+    
+    # Apply exclusion polygon mask (below dam)
+    # We calculate the mask directly in the target Web Mercator space to ensure perfect alignment
+    cols_dst, rows_dst = np.meshgrid(np.arange(dst_width), np.arange(dst_height))
+    # Transform pixel coordinates to Web Mercator meters
+    x_dst = dst_transform.a * cols_dst + dst_transform.c
+    y_dst = dst_transform.e * rows_dst + dst_transform.f
+    
+    # Transform Web Mercator meters to Lon/Lat (using the same CRS as the source DEM)
+    lons_dst, lats_dst = transform_coords(dst_crs, src.crs, x_dst.flatten(), y_dst.flatten())
+    lons_dst = np.array(lons_dst).reshape(dst_height, dst_width)
+    lats_dst = np.array(lats_dst).reshape(dst_height, dst_width)
+    
+    # Create mask in target space
+    poly_path = Path(EXCLUSION_POLYGON)
+    exclusion_mask = poly_path.contains_points(np.column_stack((lons_dst.flatten(), lats_dst.flatten())))
+    exclusion_mask = exclusion_mask.reshape(dst_height, dst_width)
     
     # Create soft mask for anti-aliasing
     transition_width = 0.5 # meters
     alpha = 125 * (1.0 - (reprojected_dem - (water_level_m - transition_width/2)) / transition_width)
     alpha = np.clip(alpha, 0, 125).astype(np.uint8)
     
-    # Set nodata areas to transparent
+    # Set nodata AND exclusion areas to transparent
     alpha[is_nodata] = 0
+    alpha[exclusion_mask] = 0
     
     # Create RGBA images
     rgba_blue = np.zeros((dst_height, dst_width, 4), dtype=np.uint8)
@@ -176,6 +193,14 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     buttons_html += '<div id="lake-level-relative" style="font-size: 18px; font-weight: bold; color: #007bff;">Loading...</div>'
     buttons_html += '</div>'
     
+    buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
+    buttons_html += '<h4 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">Current View</h4>'
+    buttons_html += '<div style="font-size: 11px; color: #666; line-height: 1.4;">'
+    buttons_html += f'Lat: <span id="view-lat">{lat_min:.6f} to {lat_max:.6f}</span><br>'
+    buttons_html += f'Lon: <span id="view-lon">{lon_min:.6f} to {lon_max:.6f}</span>'
+    buttons_html += '</div>'
+    buttons_html += '</div>'
+    
     buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Quick Zoom</h4>'
     
     for name, coords in locations.items():
@@ -208,6 +233,24 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     script_html += '    layers[1].style.opacity = (visible && color === "red") ? "0.8" : "0";'
     script_html += '  }'
     script_html += '}'
+
+    # Function to update view coordinates on map move
+    script_html += 'function updateViewCoords(map) {'
+    script_html += '  const bounds = map.getBounds();'
+    script_html += '  const sw = bounds.getSouthWest();'
+    script_html += '  const ne = bounds.getNorthEast();'
+    script_html += '  document.getElementById("view-lat").innerText = sw.lat.toFixed(6) + " to " + ne.lat.toFixed(6);'
+    script_html += '  document.getElementById("view-lon").innerText = sw.lng.toFixed(6) + " to " + ne.lng.toFixed(6);'
+    script_html += '}'
+    
+    # Initialize map event listener for coordinates
+    script_html += 'window.onload = function() {'
+    script_html += '  const map = Object.values(window).find(v => v instanceof L.Map);'
+    script_html += '  if (map) {'
+    script_html += '    map.on("moveend", function() { updateViewCoords(map); });'
+    script_html += '    updateViewCoords(map);'
+    script_html += '  }'
+    script_html += '};'
     
     # Fetch lake level
     script_html += 'fetch("https://monroe-lake-level.laszewski.workers.dev/level")'
@@ -237,7 +280,7 @@ def get_live_lake_level():
         return None
 
 if __name__ == "__main__":
-    dem_file = download_usgs_dem()
+    dem_file = get_dem_file()
     current_pool_elevation = get_live_lake_level()
     
     if current_pool_elevation is None:
