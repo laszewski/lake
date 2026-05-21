@@ -104,7 +104,7 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     alpha[is_nodata] = 0
     alpha[exclusion_mask] = 0
     
-    # Create RGBA images
+    # Create RGBA images for current flood
     rgba_blue = np.zeros((dst_height, dst_width, 4), dtype=np.uint8)
     rgba_blue[..., 2] = 255   # B
     rgba_blue[..., 3] = alpha 
@@ -112,6 +112,26 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     rgba_red = np.zeros((dst_height, dst_width, 4), dtype=np.uint8)
     rgba_red[..., 0] = 200    # R
     rgba_red[..., 3] = alpha 
+
+    # Create RGBA image for Warning Zones (0-2 ft above water)
+    rgba_warning = np.zeros((dst_height, dst_width, 4), dtype=np.uint8)
+    one_ft_m = 0.3048
+    two_ft_m = 0.6096
+    
+    # Zone 1: 0 to 1 ft above water level -> RED
+    mask_1ft = (reprojected_dem > water_level_m) & (reprojected_dem <= water_level_m + one_ft_m)
+    rgba_warning[mask_1ft, 0] = 255 # R
+    rgba_warning[mask_1ft, 3] = 160 # Alpha
+    
+    # Zone 2: 1 to 2 ft above water level -> ORANGE
+    mask_2ft = (reprojected_dem > water_level_m + one_ft_m) & (reprojected_dem <= water_level_m + two_ft_m)
+    rgba_warning[mask_2ft, 0] = 255 # R
+    rgba_warning[mask_2ft, 1] = 140 # G (Orange)
+    rgba_warning[mask_2ft, 3] = 160 # Alpha
+    
+    # Exclude area below dam and set nodata to transparent
+    rgba_warning[exclusion_mask, 3] = 0
+    rgba_warning[is_nodata, 3] = 0
     
     # Embed DEM data for client-side querying
     # Convert float32 array to base64 string for efficient embedding
@@ -152,6 +172,15 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
         interactive=False,
         cross_origin=False,
     ).add_to(m)
+
+    ImageOverlay(
+        image=rgba_warning,
+        bounds=folium_bounds,
+        name="Warning Zones",
+        opacity=0, # Hidden by default
+        interactive=False,
+        cross_origin=False,
+    ).add_to(m)
     
     folium.LayerControl(position="topright").add_to(m)
     plugins.Fullscreen(position="topleft", title="Expand", title_cancel="Exit").add_to(m)
@@ -186,6 +215,12 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     buttons_html += '<div style="margin-bottom: 10px; font-size: 13px;">'
     buttons_html += '<input type="checkbox" id="flood-visible" checked onchange="updateFloodLayer()"> '
     buttons_html += '<label for="flood-visible">Show Flood Area</label>'
+    buttons_html += '</div>'
+    
+    buttons_html += '<div style="margin-bottom: 10px; font-size: 13px;">'
+    buttons_html += '<input type="checkbox" id="warning-visible" onchange="updateFloodLayer()"> '
+    buttons_html += '<label for="warning-visible">Show Warning Zones (0-2 ft)</label>'
+    buttons_html += '<div style="font-size: 10px; color: #666; margin-left: 20px;">Red: < 1ft, Orange: 1-2ft</div>'
     buttons_html += '</div>'
     buttons_html += '<div style="font-size: 13px; display: flex; gap: 10px;">'
     buttons_html += '<label><input type="radio" name="flood-color" value="blue" checked onchange="updateFloodLayer()"> Blue</label>'
@@ -257,11 +292,13 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     # Function to toggle flood layers
     script_html += 'function updateFloodLayer() {'
     script_html += '  const visible = document.getElementById("flood-visible").checked;'
+    script_html += '  const warningVisible = document.getElementById("warning-visible").checked;'
     script_html += '  const color = document.querySelector(\'input[name="flood-color"]:checked\').value;'
     script_html += '  const layers = document.querySelectorAll(".leaflet-image-layer");'
-    script_html += '  if (layers.length >= 2) {'
+    script_html += '  if (layers.length >= 3) {'
     script_html += '    layers[0].style.opacity = (visible && color === "blue") ? "0.8" : "0";'
     script_html += '    layers[1].style.opacity = (visible && color === "red") ? "0.8" : "0";'
+    script_html += '    layers[2].style.opacity = warningVisible ? "0.8" : "0";'
     script_html += '  }'
     script_html += '}'
 
