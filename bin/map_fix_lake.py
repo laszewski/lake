@@ -14,11 +14,28 @@ This interactive map shows the flood status of various locations based on the cu
 
 <div id="map" style="height: 600px; width: 100%; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
 
-<div style="margin-top: 20px; font-family: sans-serif;">
+<div style="margin-top: 20px; margin-bottom: 20px; font-family: sans-serif;">
   <strong>Legend:</strong><br>
   <span style="color: blue;">🔵</span> Flooded (Elevation $\le$ Lake Level)<br>
   <span style="color: #d4a017;">🟡</span> Warning (Within 1 foot)<br>
-  <span style="color: green;">🟢</span> Safe (Elevation > Lake Level + 1 ft)
+  <span style="color: green;">🟢</span> Not Flooded (Elevation > Lake Level + 1 ft)
+</div>
+
+### Location Details
+
+<div style="overflow-x: auto;">
+  <table id="flood-table" style="width: 100%; border-collapse: collapse; font-family: sans-serif; margin-top: 10px;">
+    <thead>
+      <tr style="background-color: #f2f2f2; text-align: left;">
+        <th style="padding: 12px; border: 1px solid #ddd;">Location</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: center;">Elevation (ft)</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be inserted here by JS -->
+    </tbody>
+  </table>
 </div>
 
 <!-- Leaflet CSS -->
@@ -44,19 +61,28 @@ This interactive map shows the flood status of various locations based on the cu
     const latestValue = data.values[data.values.length - 1][1];
     document.getElementById('current-level').innerText = latestValue;
 
-    // Plot Markers
-    elevationData.forEach(point => {{
+    const tableBody = document.querySelector('#flood-table tbody');
+    
+    // Sort data by location for the table
+    const sortedData = [...elevationData].sort((a, b) => a.loc.localeCompare(b.loc));
+
+    // Plot Markers and Populate Table
+    sortedData.forEach(point => {{
       let color = 'green';
-      let status = 'Safe';
+      let status = 'Not Flooded';
+      let statusEmoji = '🟢';
       
       if (point.elev <= latestValue) {{
         color = 'blue';
         status = 'Flooded';
+        statusEmoji = '🔵';
       }} else if (point.elev <= latestValue + 1) {{
         color = 'orange';
         status = 'Warning';
+        statusEmoji = '🟡';
       }}
 
+      // Add Map Marker
       L.circleMarker([point.lat, point.lon], {{
         radius: 8,
         fillColor: color,
@@ -65,6 +91,15 @@ This interactive map shows the flood status of various locations based on the cu
         opacity: 1,
         fillOpacity: 0.8
       }}).addTo(map).bindPopup(`<strong>${{point.loc}}</strong><br>Elevation: ${{point.elev}} ft<br>Status: ${{status}}`);
+
+      // Add Table Row
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td style="padding: 10px; border: 1px solid #ddd;">${{point.loc}}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${{point.elev}}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: left;">${{statusEmoji}} ${{status}}</td>
+      `;
+      tableBody.appendChild(row);
     }});
   }} catch (error) {{
     console.error('Error loading map data:', error);
@@ -77,4 +112,4 @@ This interactive map shows the flood status of various locations based on the cu
 with open('docs/lake-level-map.md', 'w', encoding='utf-8') as f:
     f.write(template)
 
-print("Successfully fixed docs/lake-level-map.md")
+print("Successfully updated docs/lake-level-map.md with table")

@@ -1,7 +1,7 @@
 import csv
 import json
 
-input_file = 'elevation_converted.csv'
+input_file = 'elevation.csv'
 output_file = 'elevation_data.json'
 
 data = []

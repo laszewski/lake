@@ -166,6 +166,7 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
         "Pinegrove": [39.10910, -86.38909],
         "North Fork": [39.11133, -86.39926],
         "Salt Creek": [39.13144, -86.39161],
+        "Stillwater Observation": [39.143109, -86.392968],
     }
     
     buttons_html = '<div id="flood-control-panel" style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: Arial, sans-serif; min-width: 200px;">'
@@ -235,9 +236,9 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     script_html += '  const enabled = document.getElementById("query-mode").checked;'
     script_html += '  const info = document.getElementById("point-info");'
     script_html += '  if (enabled) {'
-    script_html += '    info.innerText = "Query Mode ON: Click map to get elevation";'
+    script_html += '    info.innerHTML = "Query Mode ON:<br>Click map for elevation";'
     script_html += '  } else {'
-    script_html += '    info.innerText = "Click map to query elevation (Enable Query Mode first)";'
+    script_html += '    info.innerText = "Click map to query elevation";'
     script_html += '  }'
     script_html += '}'
 

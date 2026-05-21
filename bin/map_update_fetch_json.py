@@ -12,7 +12,7 @@ This interactive map shows the flood status of various locations based on the cu
   <strong>Legend:</strong><br>
   <span style="color: blue;">🔵</span> Flooded (Elevation $\le$ Lake Level)<br>
   <span style="color: #d4a017;">🟡</span> Warning (Within 1 foot)<br>
-  <span style="color: green;">🟢</span> Safe (Elevation > Lake Level + 1 ft)
+  <span style="color: green;">🟢</span> Not Flooded (Elevation > Lake Level + 1 ft)
 </div>
 
 ### Location Details
@@ -69,7 +69,7 @@ This interactive map shows the flood status of various locations based on the cu
     // Plot Markers and Populate Table
     sortedData.forEach(point => {{
       let color = 'green';
-      let status = 'Safe';
+      let status = 'Not Flooded';
       let statusEmoji = '🟢';
       
       if (point.elev <= latestValue) {{

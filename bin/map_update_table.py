@@ -18,7 +18,7 @@ This interactive map shows the flood status of various locations based on the cu
   <strong>Legend:</strong><br>
   <span style="color: blue;">🔵</span> Flooded (Elevation $\le$ Lake Level)<br>
   <span style="color: #d4a017;">🟡</span> Warning (Within 1 foot)<br>
-  <span style="color: green;">🟢</span> Safe (Elevation > Lake Level + 1 ft)
+  <span style="color: green;">🟢</span> Not Flooded (Elevation > Lake Level + 1 ft)
 </div>
 
 ### Location Details
@@ -29,7 +29,7 @@ This interactive map shows the flood status of various locations based on the cu
       <tr style="background-color: #f2f2f2; text-align: left;">
         <th style="padding: 12px; border: 1px solid #ddd;">Location</th>
         <th style="padding: 12px; border: 1px solid #ddd; text-align: center;">Elevation (ft)</th>
-        <th style="padding: 12px; border: 1px solid #ddd; text-align: center;">Status</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
       </tr>
     </thead>
     <tbody>
@@ -69,7 +69,7 @@ This interactive map shows the flood status of various locations based on the cu
     // Plot Markers and Populate Table
     sortedData.forEach(point => {{
       let color = 'green';
-      let status = 'Safe';
+      let status = 'Not Flooded';
       let statusEmoji = '🟢';
       
       if (point.elev <= latestValue) {{
@@ -97,7 +97,7 @@ This interactive map shows the flood status of various locations based on the cu
       row.innerHTML = `
         <td style="padding: 10px; border: 1px solid #ddd;">${{point.loc}}</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${{point.elev}}</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${{statusEmoji}} ${{status}}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: left;">${{statusEmoji}} ${{status}}</td>
       `;
       tableBody.appendChild(row);
     }});

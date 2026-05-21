@@ -17,7 +17,7 @@ with open(input_file, 'r', encoding='utf-8') as f:
         elif elev <= lake_level + 1:
             status = "🟡 Warning"
         else:
-            status = "🟢 Safe"
+            status = "🟢 Not Flooded"
         
         results.append({
             'location': loc,
@@ -34,7 +34,7 @@ with open(output_file, 'w', encoding='utf-8') as f:
     f.write(f"**Legend:**\n")
     f.write(fr"- 🔵 **Blue**: Flooded (Elevation $\le$ {lake_level} ft)" + "\n")
     f.write(fr"- 🟡 **Yellow**: Within 1 foot ({lake_level} ft < Elevation $\le$ {lake_level + 1:.2f} ft)" + "\n")
-    f.write(fr"- 🟢 **Green**: Safe (Elevation > {lake_level + 1:.2f} ft)" + "\n\n")
+    f.write(fr"- 🟢 **Green**: Not Flooded (Elevation > {lake_level + 1:.2f} ft)" + "\n\n")
     f.write(f"| Location | Elevation (ft) | Status |\n")
     f.write(f"| :--- | :---: | :---: |\n")
     
