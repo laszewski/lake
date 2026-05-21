@@ -200,24 +200,24 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     
     buttons_html = '<div id="flood-control-panel" style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: Arial, sans-serif; min-width: 200px;">'
     
-    # Panel Header with Toggle
+    # Panel Header with Toggles
     buttons_html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">'
-    buttons_html += '<strong style="font-size: 14px; color: #333;">Flood Controls</strong>'
+    buttons_html += '<a href="/flood-map-interactive/" style="text-decoration: none; background: #f44336; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold;">Exit</a>'
+    buttons_html += '<strong style="font-size: 14px; color: #333;">Controls</strong>'
     buttons_html += '<button onclick="togglePanel()" id="panel-toggle-btn" style="cursor: pointer; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 10px; padding: 2px 5px;">Minimize</button>'
     buttons_html += '</div>'
     
     # Content Wrapper
     buttons_html += '<div id="panel-content">'
     
-    # Flood Layer Controls
-    buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
-    buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Map Tools</h4>'
-    buttons_html += '<div style="margin-bottom: 10px; font-size: 13px;">'
+    # Map Tools (No header)
+    buttons_html += '<div style="margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px;">'
+    buttons_html += '<div style="margin-bottom: 5px; font-size: 13px;">'
     buttons_html += '<input type="checkbox" id="flood-visible" checked onchange="updateFloodLayer()"> '
     buttons_html += '<label for="flood-visible">Show Flood Area</label>'
     buttons_html += '</div>'
     
-    buttons_html += '<div style="margin-bottom: 10px; font-size: 13px;">'
+    buttons_html += '<div style="margin-bottom: 5px; font-size: 13px;">'
     buttons_html += '<input type="checkbox" id="warning-visible" onchange="updateFloodLayer()"> '
     buttons_html += '<label for="warning-visible">Show Warning Zones (0-2 ft)</label>'
     buttons_html += '<div style="font-size: 10px; color: #666; margin-left: 20px;">Red: < 1ft, Orange: 1-2ft</div>'
@@ -228,30 +228,32 @@ def generate_interactive_flood_map(dem_file, water_level_ft):
     buttons_html += '</div>'
     buttons_html += '</div>'
     
-    buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
-    buttons_html += '<h4 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">Lake Level</h4>'
-    buttons_html += '<div id="lake-level-value" style="font-size: 18px; font-weight: bold; color: #007bff;">Loading...</div>'
-    buttons_html += '<div style="margin-top: 10px; font-size: 12px; color: #666;">Above Normal:</div>'
-    buttons_html += '<div id="lake-level-relative" style="font-size: 18px; font-weight: bold; color: #007bff;">Loading...</div>'
+    buttons_html += '<div style="margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px;">'
+    buttons_html += '<h4 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">Lake Status</h4>'
+    buttons_html += '<table style="width: 100%; font-size: 11px; margin-top: 2px;">'
+    buttons_html += '<tr><td style="color: #666;">Level</td><td style="color: #666; text-align: right;">Above Normal</td></tr>'
+    buttons_html += '<tr><td id="lake-level-value" style="font-size: 15px; font-weight: bold; color: #007bff;">Loading...</td>'
+    buttons_html += '<td id="lake-level-relative" style="font-size: 15px; font-weight: bold; color: #007bff; text-align: right;">Loading...</td></tr>'
+    buttons_html += '</table>'
     buttons_html += '</div>'
     
-    buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
-    buttons_html += '<h4 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">Current View</h4>'
+    buttons_html += '<div style="margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px;">'
+    buttons_html += '<h4 style="margin: 0 0 2px 0; font-size: 14px; color: #333;">Current View</h4>'
     buttons_html += '<div style="font-size: 11px; color: #666; line-height: 1.4;">'
     buttons_html += f'Lat: <span id="view-lat">{lat_min:.6f} to {lat_max:.6f}</span><br>'
     buttons_html += f'Lon: <span id="view-lon">{lon_min:.6f} to {lon_max:.6f}</span>'
     buttons_html += '</div>'
     buttons_html += '</div>'
     
-    buttons_html += '<div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">'
-    buttons_html += '<div style="margin-bottom: 5px; font-size: 13px;">'
+    buttons_html += '<div style="margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px;">'
+    buttons_html += '<div style="margin-bottom: 2px; font-size: 13px;">'
     buttons_html += '<input type="checkbox" id="query-mode" onchange="updateQueryMode()"> '
     buttons_html += '<label for="query-mode" style="font-weight: bold; font-size: 14px; color: #333;">Point Info</label>'
     buttons_html += '</div>'
     buttons_html += '<div id="point-info" style="font-size: 12px; color: #666; line-height: 1.4;">Click map to query elevation</div>'
     buttons_html += '</div>'
     
-    buttons_html += '<h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">Quick Zoom</h4>'
+    buttons_html += '<h4 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">Quick Zoom</h4>'
     
     for name, coords in locations.items():
         js_call = f"var m = Object.values(window).find(v => v instanceof L.Map); if(m) m.setView([{coords[0]}, {coords[1]}], 17);"
